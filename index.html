@@ -3,528 +3,970 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>秀山县发改局项目批复看板</title>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { min-height: 100%; scroll-behavior: smooth; }
+<meta name="description" content="酉阳、秀山发展改革项目批复监测与分析工作台。">
+<title>发改批复监测工作台</title>
+<style>:root {
+  color-scheme: light;
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --surface-subtle: #f8f9fb;
+  --ink: #182230;
+  --muted: #667085;
+  --line: #e1e5ea;
+  --line-strong: #cbd2da;
+  --accent: #2f5f9e;
+  --accent-hover: #244b7e;
+  --accent-soft: #edf3fa;
+  --focus: #7ba7d9;
+  --shadow: 0 12px 36px rgba(20, 32, 48, .12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #12161b;
+  --surface: #191f26;
+  --surface-subtle: #202730;
+  --ink: #edf1f5;
+  --muted: #a0abba;
+  --line: #303944;
+  --line-strong: #46515e;
+  --accent: #8eb5e5;
+  --accent-hover: #b3cff0;
+  --accent-soft: #233246;
+  --focus: #8eb5e5;
+  --shadow: 0 12px 36px rgba(0, 0, 0, .32);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
-  position: relative;
-  font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", "Noto Sans SC", sans-serif;
-  color: #1f2d3d; line-height: 1.7; -webkit-font-smoothing: antialiased;
-  max-width: 1400px; margin: 0 auto; padding: 24px 28px;
-  background: linear-gradient(160deg, #f8fafc 0%, #ffffff 45%, #cfe0f5 100%);
-  min-height: 100vh;
+  min-width: 320px; background: var(--bg); color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
 }
-body::before {
-  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 45% 35% at 18% 8%, rgba(255,255,255,0.55) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 88% 90%, rgba(255,255,255,0.45) 0%, transparent 55%);
+a { color: inherit; }
+button, input, select { font: inherit; }
+button, select { cursor: pointer; }
+button { color: inherit; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, tr:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--focus); outline-offset: 2px;
 }
-body > * { position: relative; z-index: 1; }
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; align-items: start; }
-.topnav {
-  position: sticky; top: 12px; z-index: 50;
-  display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
-  padding: 8px 10px; margin: 0 0 8px 0;
-  background: rgba(255,255,255,0.94); border: 1px solid #dbe4ef; border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(15,30,51,0.08);
+[hidden] { display: none !important; }
+.skip-link { position: fixed; left: 16px; top: -60px; z-index: 100; background: var(--surface); padding: 8px 12px; border: 1px solid var(--line); }
+.skip-link:focus { top: 12px; }
+
+.app-header { position: sticky; top: 0; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--line); }
+.header-inner { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 16px; }
+.brand { display: flex; flex-direction: column; gap: 2px; text-decoration: none; }
+.brand-name { font-size: 14px; font-weight: 650; letter-spacing: .02em; }
+.brand-scope { color: var(--muted); font-size: 10px; }
+.top-nav { display: none; align-self: stretch; gap: 22px; }
+.top-nav a { display: flex; align-items: center; color: var(--muted); text-decoration: none; font-size: 12px; border-bottom: 2px solid transparent; }
+.top-nav a:hover { color: var(--ink); border-bottom-color: var(--line-strong); }
+.header-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.update-time { display: none; color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+
+.workspace { max-width: 1440px; margin: 0 auto; padding: 16px 14px 36px; }
+.page-heading { display: flex; flex-direction: column; gap: 14px; margin-bottom: 14px; }
+h1 { font-size: 20px; line-height: 1.35; font-weight: 650; letter-spacing: -.02em; }
+.page-heading p, .section-heading p { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.page-actions { display: flex; gap: 8px; }
+.page-actions .button { flex: 1; }
+.page-actions .panel-settings { flex: 1; }
+.page-actions .panel-settings summary { width: 100%; }
+.button {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 36px; padding: 7px 12px;
+  border: 1px solid var(--line-strong); border-radius: 6px; background: var(--surface); color: var(--ink);
+  text-decoration: none; font-size: 12px; font-weight: 500; line-height: 1.4; white-space: nowrap;
 }
-.topnav a {
-  padding: 5px 14px; border-radius: 20px; font-size: 13px;
-  color: #5b6b80; text-decoration: none; background: #f8fafc; border: 1px solid transparent;
-  transition: color .15s, background .15s, border-color .15s;
+.button:hover { background: var(--surface-subtle); border-color: var(--muted); }
+.button-primary { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+html[data-theme="dark"] .button-primary { color: #122033; }
+.button-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.button-quiet { border-color: transparent; background: transparent; color: var(--muted); }
+.button-quiet:hover { color: var(--ink); border-color: var(--line); }
+.button:disabled { opacity: .4; cursor: default; }
+
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 10px; padding: 12px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px 8px 0 0;
 }
-.topnav a:hover { color: #2563eb; background: #e8f0fe; border-color: #3b82f6; }
-.topnav .nav-total { margin-left: auto; font-size: 12px; color: #5b6b80; padding: 0 6px; }
-#sec1,#sec2,#sec3,#sec4,#sec5 { scroll-margin-top: 76px; }
-.title {
-  position: relative; overflow: hidden; padding: 40px 36px; text-align: center;
-  background: linear-gradient(135deg, #1e3a5f 0%, #3b82f6 50%, #4f8ef7 100%);
-  color: #ffffff; border-radius: 16px; margin-bottom: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+.filter-field { display: flex; flex-direction: column; gap: 5px; flex: 1 1 100%; min-width: 0; }
+.filter-city, .filter-search { flex-basis: 100%; }
+.field-label { color: var(--muted); font-size: 10px; line-height: 1.2; }
+select, input[type="search"] {
+  width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--line-strong); border-radius: 6px;
+  background: var(--surface); color: var(--ink); font-size: 13px; outline: none;
 }
-.title::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 70% 55% at 18% 82%, rgba(255,255,255,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 40% at 82% 18%, rgba(255,255,255,0.08) 0%, transparent 55%);
+input[type="search"] { cursor: text; }
+select:focus, input[type="search"]:focus { border-color: var(--focus); }
+.segmented { display: flex; height: 38px; padding: 2px; border: 1px solid var(--line-strong); border-radius: 6px; background: var(--surface-subtle); }
+.segmented button { flex: 1; min-width: 56px; border: 0; border-radius: 4px; background: transparent; color: var(--muted); font-size: 12px; }
+.segmented button:hover { color: var(--ink); }
+.segmented button.active { background: var(--surface); color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
+.reset-button { margin-left: auto; }
+.filter-status {
+  display: flex; flex-direction: column; gap: 6px; padding: 10px 12px;
+  border: 1px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px;
+  color: var(--muted); font-size: 11px;
 }
-.title > * { position: relative; z-index: 1; }
-.title h1 { font-size: 28px; font-weight: 800; margin: 0 0 14px 0; letter-spacing: 1px; color: #ffffff; }
-.title .accent-line { width: 48px; height: 3px; background: rgba(255,255,255,0.85); margin: 0 auto 18px; border-radius: 2px; }
-.title p { font-size: 15px; color: rgba(255,255,255,0.88); margin: 0; line-height: 1.7; }
-.title .badge {
-  display: inline-block; margin-top: 14px; padding: 4px 14px;
-  background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35);
-  border-radius: 20px; font-size: 12px; color: #fff; letter-spacing: 1px;
+.active-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter-chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface-subtle); }
+.filter-chip button { border: 0; background: transparent; color: var(--muted); padding: 0 2px; line-height: 1.2; }
+.filter-chip button:hover { color: var(--ink); }
+
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.kpi-card { min-width: 0; padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+.kpi-label { display: block; color: var(--muted); font-size: 11px; }
+.kpi-value { display: block; margin-top: 6px; font-size: 20px; line-height: 1.2; font-weight: 620; letter-spacing: -.025em; font-variant-numeric: tabular-nums; }
+.kpi-note { display: block; min-height: 16px; margin-top: 6px; color: var(--muted); font-size: 10px; }
+
+.analysis-section, .projects-section { margin-top: 26px; scroll-margin-top: 72px; }
+.section-heading { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+h2 { font-size: 16px; line-height: 1.4; font-weight: 620; }
+.section-meta { color: var(--muted); font-size: 11px; }
+.panel-settings { position: relative; align-self: flex-start; }
+.panel-settings summary { list-style: none; }
+.panel-settings summary::-webkit-details-marker { display: none; }
+.panel-menu { position: absolute; right: 0; top: 40px; z-index: 20; width: min(250px, calc(100vw - 28px)); padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow); }
+.panel-option { display: flex; gap: 10px; align-items: flex-start; width: 100%; padding: 9px; border: 0; border-radius: 5px; background: transparent; text-align: left; cursor: pointer; }
+.panel-option:hover { background: var(--surface-subtle); }
+.panel-option .switch-mark { flex: none; width: 30px; height: 16px; margin-top: 2px; border: 1px solid var(--line-strong); border-radius: 99px; background: var(--surface-subtle); position: relative; transition: background .15s, border-color .15s; }
+.panel-option .switch-mark::after { content: ""; position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: 50%; background: var(--muted); transition: transform .15s, background .15s; }
+.panel-option[aria-checked="true"] .switch-mark { background: var(--accent-soft); border-color: var(--accent); }
+.panel-option[aria-checked="true"] .switch-mark::after { transform: translateX(14px); background: var(--accent); }
+.panel-option span { display: block; font-size: 12px; }
+.panel-option small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+
+.analysis-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.analysis-panel { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+.panel-header { min-height: 58px; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.panel-header h3 { font-size: 13px; font-weight: 600; }
+.panel-header p { color: var(--muted); font-size: 10px; margin-top: 2px; }
+.panel-body { padding: 14px; }
+.module-toolbar { display: flex; align-items: center; gap: 8px; }
+.module-footer { padding: 10px 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
+.module-footer:empty { display: none; }
+.chart-legend { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 12px; color: var(--muted); font-size: 10px; }
+.legend-items { display: flex; flex-wrap: wrap; gap: 12px; }
+.chart-legend span { display: flex; align-items: center; gap: 5px; }
+.legend-mark { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+.metric-switch { display: flex; gap: 2px; padding: 2px; background: var(--surface-subtle); border: 1px solid var(--line); border-radius: 5px; }
+.metric-switch button { padding: 4px 9px; border: 0; border-radius: 3px; background: transparent; color: var(--muted); font-size: 10px; }
+.metric-switch button.active { background: var(--surface); color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
+
+.trend-chart { display: flex; gap: 6px; min-height: 190px; border-bottom: 1px solid var(--line); }
+.trend-month { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; border-radius: 4px 4px 0 0; }
+.trend-month.selected { background: var(--accent-soft); }
+.trend-bars { height: 152px; display: flex; align-items: flex-end; justify-content: center; gap: 4px; width: 100%; }
+.trend-bar { position: relative; width: min(20px, 30%); min-height: 1px; border: 0; border-radius: 3px 3px 0 0; padding: 0; }
+.trend-bar:hover, .trend-bar:focus-visible { filter: brightness(.92); }
+.trend-bar::after {
+  content: attr(data-tooltip); position: absolute; left: 50%; bottom: calc(100% + 7px); transform: translateX(-50%);
+  z-index: 10; width: max-content; max-width: 170px; padding: 4px 7px; border-radius: 4px; background: var(--ink); color: var(--bg);
+  font-size: 10px; line-height: 1.4; opacity: 0; pointer-events: none; white-space: nowrap;
 }
-h1.heading { font-size: 24px; color: #0f1e33; margin: 22px 0 14px 0; font-weight: 700; border-left: 4px solid #3b82f6; padding-left: 14px; }
-h2.heading { font-size: 20px; color: #0f1e33; margin: 22px 0 10px; padding-bottom: 8px; border-bottom: 2px solid #c9d6f3; font-weight: 600; }
-.stat-grid { display: flex; gap: 16px; margin: 0 0 16px 0; }
-.stat {
-  flex: 1; text-align: center; padding: 20px;
-  background: #ffffff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  border-top: 3px solid #3b82f6;
-}
-.stat .num { font-size: 30px; color: #3b82f6; font-weight: 800; line-height: 1.1; }
-.stat .num small { font-size: 14px; font-weight: 600; }
-.stat .label { font-size: 12px; color: #5b6b80; margin-top: 6px; }
-.stat .num.dark { color: #0f1e33; }
-.stat .num.warn { color: #d97706; }
-.trend-card { background: #ffffff; padding: 24px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin: 0 0 16px 0; }
-.trend-card h3 { font-size: 18px; color: #0f1e33; margin: 0 0 8px 0; font-weight: 700; }
-.trend-card .note { font-size: 12px; color: #5b6b80; margin: 8px 0 0 0; }
-.chart-row { display: flex; gap: 6px; align-items: flex-end; height: 92px; margin: 0 0 10px 0; }
-.chart-row .bar { flex: 1; border-radius: 3px 3px 0 0; min-height: 4px; background: linear-gradient(180deg, #3b82f6, #c9d6f3); }
-.bar-cell { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; cursor: pointer; }
-.bar-cell .bar { width: 100%; flex: none; }
-.bar-val { font-size: 12px; font-weight: 700; color: #2563eb; line-height: 1; margin-bottom: 3px; }
-.bar-cell:hover .bar { filter: brightness(1.12); }
-.bar-cell.active .bar { outline: 2px solid #2563eb; outline-offset: 2px; }
-.chart-labels { display: flex; gap: 6px; margin-top: 2px; }
-.chart-labels span { flex: 1; text-align: center; font-size: 11px; color: #5b6b80; cursor: pointer; border-radius: 4px; }
-.chart-labels span:hover { color: #2563eb; text-decoration: underline; }
-.chart-labels span.active { color: #2563eb; font-weight: 700; }
-.hbar-row { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
-.hbar-item { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 4px 6px; margin: 0 -6px; border-radius: 8px; transition: background .15s; }
-.hbar-item:hover { background: #f1f6ff; }
-.hbar-item.active { background: #e8f0fe; }
-.hbar-item.active .hbar-label b { text-decoration: underline; }
-.hbar-label { width: 120px; font-size: 13px; color: #1f2d3d; text-align: right; }
-.hbar-label b { color: #3b82f6; font-weight: 800; }
-.hbar-track { flex: 1; background: #e8f0fe; border-radius: 6px; height: 18px; overflow: hidden; }
-.hbar-fill { height: 100%; border-radius: 6px; }
-.table-wrap { background: #ffffff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); overflow: hidden; margin: 0 0 16px 0; }
-.table-caption {
-  padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
-  background: linear-gradient(135deg, #c9d6f3, #e8f0fe); color: #0f1e33; font-size: 14px; font-weight: 600;
-  border-bottom: 1px solid #dbe4ef;
-}
-.cap-right { display: flex; align-items: center; gap: 8px; font-weight: 400; font-size: 12px; color: #5b6b80; }
-.search-input {
-  padding: 6px 12px; border: 1px solid #dbe4ef; border-radius: 20px; font-size: 12.5px;
-  color: #1f2d3d; background: #ffffff; outline: none; width: 200px; font-family: inherit;
-  transition: border-color .15s, box-shadow .15s;
-}
-.search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
-.filter-tag {
-  display: none; align-items: center; gap: 6px; padding: 2px 6px 2px 12px;
-  background: #ffffff; border: 1px solid #3b82f6; border-radius: 20px; font-size: 12px; font-weight: 600; color: #2563eb;
-}
-.filter-tag.visible { display: inline-flex; }
-.filter-tag .filter-x { border: none; background: transparent; color: #5b6b80; cursor: pointer; font-size: 13px; padding: 0 4px; font-family: inherit; line-height: 1; }
-.filter-tag .filter-x:hover { color: #d97706; }
+.trend-bar:hover::after, .trend-bar:focus-visible::after { opacity: 1; }
+.trend-label { width: 100%; padding: 8px 0; text-align: center; color: var(--muted); font-size: 9px; white-space: nowrap; }
+
+.category-list { display: grid; gap: 12px; }
+.category-row { display: grid; grid-template-columns: 64px minmax(50px, 1fr) 62px; gap: 9px; align-items: center; width: 100%; border: 0; background: transparent; text-align: left; font-size: 11px; }
+.category-row:hover .category-name { color: var(--accent); }
+.category-row.selected .category-name { color: var(--accent); font-weight: 600; }
+.category-track { height: 8px; border-radius: 3px; background: var(--surface-subtle); overflow: hidden; }
+.category-fill { display: block; height: 100%; min-width: 2px; border-radius: 3px; background: var(--accent); }
+.category-value { text-align: right; color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+.chart-empty { padding: 40px 10px; text-align: center; color: var(--muted); font-size: 11px; }
+
+.city-compare { display: grid; gap: 2px; }
+.city-row { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 10px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 11px; }
+.city-row:last-child { border-bottom: 0; }
+.city-name { display: flex; align-items: center; gap: 7px; flex: 0 0 58px; }
+.city-select { border: 0; background: transparent; text-align: left; font-size: 11px; }
+.city-select:hover { color: var(--accent); }
+.city-name .legend-mark { flex: none; }
+.city-track { flex: 1 1 100%; height: 9px; border-radius: 3px; background: var(--surface-subtle); overflow: hidden; }
+.city-fill { display: block; height: 100%; min-width: 2px; border-radius: 3px; }
+.city-number { font-variant-numeric: tabular-nums; }
+.city-date { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.table-container { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .table-scroll { overflow-x: auto; }
-table.table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; min-width: 780px; }
-table.table thead th {
-  padding: 11px 14px; text-align: left; background: #c9d6f3; color: #0f1e33; font-weight: 700;
-  border-bottom: 2px solid #dbe4ef; word-break: break-word; white-space: nowrap; cursor: pointer; user-select: none;
+table { width: 100%; min-width: 760px; border-collapse: collapse; table-layout: fixed; }
+th { padding: 10px 12px; background: var(--surface-subtle); border-bottom: 1px solid var(--line); color: var(--muted); text-align: left; font-size: 10px; font-weight: 500; }
+th:nth-child(1) { width: 108px; } th:nth-child(2) { width: 66px; } th:nth-child(3) { width: 88px; }
+th:nth-child(5) { width: 102px; } th:nth-child(6) { width: 176px; }
+th.numeric, td.numeric { text-align: right; }
+.sort-button { border: 0; background: transparent; color: inherit; padding: 0; font-size: inherit; }
+.sort-button:hover, .sort-button.active { color: var(--accent); }
+.sort-button.active::after { content: "降序"; margin-left: 5px; font-size: 9px; }
+.sort-button.active.ascending::after { content: "升序"; }
+td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; font-size: 11px; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: var(--surface-subtle); }
+tbody tr:last-child td { border-bottom: 0; }
+.cell-date, .cell-money { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cell-city { display: inline-flex; align-items: center; gap: 6px; }
+.cell-city .legend-mark { width: 6px; height: 6px; }
+.cell-category { color: var(--muted); }
+.project-name { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 12px; }
+.project-unit { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--muted); font-size: 10px; margin-top: 3px; }
+.cell-doc { color: var(--muted); overflow-wrap: anywhere; }
+.empty-state { padding: 40px 16px; text-align: center; color: var(--muted); font-size: 12px; }
+.empty-state .button { margin-top: 12px; }
+.table-footer { min-height: 48px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
+.pagination { display: flex; align-items: center; gap: 10px; }
+
+.sources-section { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 26px; padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); scroll-margin-top: 72px; }
+.sources-section p { margin-top: 8px; color: var(--muted); font-size: 11px; line-height: 1.85; }
+.source-links { display: grid; align-content: start; gap: 6px; }
+.source-card { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); text-decoration: none; font-size: 11px; }
+.source-card:last-child { border-bottom: 0; }
+.source-card span { color: var(--muted); font-size: 10px; }
+.source-card:hover { color: var(--accent); }
+.app-footer { max-width: 1440px; margin: 0 auto; padding: 0 14px 24px; display: flex; flex-direction: column; gap: 4px; color: var(--muted); font-size: 10px; }
+
+.drawer-mask { position: fixed; inset: 0; z-index: 50; background: rgba(14, 22, 32, .38); }
+.detail-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 60; width: 100%; display: flex; flex-direction: column; background: var(--surface); box-shadow: var(--shadow); }
+.drawer-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; padding: 16px; border-bottom: 1px solid var(--line); }
+.drawer-eyebrow { color: var(--muted); font-size: 10px; }
+.drawer-header h2 { margin-top: 6px; font-size: 15px; line-height: 1.65; }
+.drawer-body { flex: 1; overflow-y: auto; padding: 16px; }
+.detail-list { display: grid; grid-template-columns: 84px 1fr; gap: 9px 12px; font-size: 12px; }
+.detail-list dt { color: var(--muted); }
+.detail-list dd { overflow-wrap: anywhere; }
+.document-section { margin-top: 22px; }
+.document-section h3 { font-size: 13px; font-weight: 600; padding-bottom: 9px; border-bottom: 1px solid var(--line); }
+.document-content { margin-top: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-subtle); white-space: pre-wrap; font-size: 12px; line-height: 1.9; }
+.drawer-footer { display: flex; justify-content: flex-end; padding: 12px 16px; border-top: 1px solid var(--line); }
+.toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 80; padding: 9px 14px; border-radius: 6px; background: var(--ink); color: var(--bg); box-shadow: var(--shadow); font-size: 12px; }
+
+@media (min-width: 480px) {
+  .trend-label { font-size: 10px; }
+  .category-row { grid-template-columns: 72px minmax(60px, 1fr) 72px; }
 }
-table.table thead th:hover { background: #bccdf0; }
-table.table thead th .ar { opacity: .35; margin-left: 3px; font-size: 10px; }
-table.table thead th.sorted .ar { opacity: 1; color: #2563eb; }
-table.table tbody td { padding: 9px 14px; border-bottom: 1px solid #dbe4ef; color: #1f2d3d; word-break: break-word; }
-table.table tbody tr { cursor: pointer; transition: background .12s; }
-table.table tbody tr:hover { background: #f1f6ff; }
-td.nm { max-width: 380px; }
-td.nm .t { font-weight: 500; line-height: 1.5; }
-td.nm .x { font-size: 11.5px; color: #5b6b80; margin-top: 2px; }
-.tag { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; white-space: nowrap; }
-.tag-ks { background: #e8f0fe; color: #2563eb; }
-.tag-sj { background: #eef5ff; color: #0f1e33; }
-.tag-lx { background: #e6f4ea; color: #16a34a; }
-.money { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 500; }
-.money.big { color: #d97706; font-weight: 700; }
-.date { color: #1f2d3d; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.docno { font-size: 11.5px; color: #5b6b80; white-space: nowrap; }
-.empty { padding: 44px; text-align: center; color: #5b6b80; font-size: 13px; }
-.row-hint { font-size: 11px; color: #8ea0b5; margin-top: 3px; text-align: right; padding: 6px 16px 0; }
-.pager { display: flex; gap: 6px; justify-content: center; align-items: center; padding: 12px 16px; border-top: 1px solid #dbe4ef; flex-wrap: wrap; }
-.pager-btn { min-width: 32px; height: 32px; padding: 0 10px; border: 1px solid #dbe4ef; background: #ffffff; color: #1f2d3d; font-size: 13px; border-radius: 6px; cursor: pointer; font-family: inherit; transition: border-color .15s, color .15s; }
-.pager-btn:hover:not(:disabled):not(.active) { border-color: #3b82f6; color: #2563eb; }
-.pager-btn.active { background: #3b82f6; border-color: #3b82f6; color: #ffffff; font-weight: 600; }
-.pager-btn:disabled { opacity: .4; cursor: default; }
-.pager-info { font-size: 12px; color: #5b6b80; }
-.pager-nums { display: flex; gap: 6px; }
-.callout { margin: 16px 0; padding: 16px 24px; background: #e8f0fe; border-left: 4px solid #3b82f6; border-radius: 8px; }
-.callout p { font-size: 15px; color: #1f2d3d; margin: 0; line-height: 1.8; }
-.source-list { margin: 0; }
-.source-list ol { padding-left: 20px; font-size: 13px; color: #5b6b80; line-height: 2.0; }
-.source-list .src-id { display: inline-block; width: 24px; font-weight: 700; color: #3b82f6; }
-.source-list .source-link { color: #2563eb; text-decoration: none; border-bottom: 1px solid rgba(59,130,246,0.35); }
-.mask { position: fixed; inset: 0; background: rgba(15,23,42,.42); opacity: 0; pointer-events: none; transition: opacity .22s; z-index: 40; }
-.mask.on { opacity: 1; pointer-events: auto; }
-.drawer {
-  position: fixed; top: 0; right: 0; height: 100%; width: min(680px, 94vw);
-  background: #ffffff; z-index: 50; transform: translateX(100%);
-  transition: transform .26s cubic-bezier(.4,0,.2,1);
-  display: flex; flex-direction: column; box-shadow: -6px 0 24px rgba(15,30,51,.16);
+@media (min-width: 760px) {
+  .header-inner { padding: 0 24px; min-height: 58px; }
+  .brand { flex-direction: row; align-items: baseline; gap: 10px; }
+  .brand-name { font-size: 15px; }
+  .update-time { display: inline; }
+  .workspace { padding: 24px 24px 44px; }
+  .page-heading { flex-direction: row; align-items: center; justify-content: space-between; }
+  .page-actions { flex-direction: row; }
+  .page-actions .button { flex: none; }
+  .page-actions .panel-settings { flex: none; }
+  .page-actions .panel-settings summary { width: auto; }
+  h1 { font-size: 22px; }
+  .filter-bar { align-items: flex-end; gap: 12px; padding: 14px 16px; }
+  .filter-field { flex: 0 1 150px; }
+  .filter-city { flex: 1 1 210px; }
+  .filter-search { flex: 1 1 240px; }
+  .reset-button { margin-left: 0; }
+  .filter-status { flex-direction: row; align-items: center; justify-content: space-between; }
+  .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .kpi-value { font-size: 23px; }
+  .section-heading { flex-direction: row; align-items: center; justify-content: space-between; }
+  .chart-legend { flex-direction: row; align-items: center; justify-content: space-between; }
+  .trend-bars { height: 160px; }
+  .city-track { flex: 1 1 auto; }
+  .table-footer { flex-direction: row; align-items: center; justify-content: space-between; }
+  .sources-section { grid-template-columns: 1.5fr 1fr; gap: 32px; padding: 22px; }
+  .app-footer { flex-direction: row; justify-content: space-between; padding: 0 24px 28px; }
+  .detail-drawer { width: min(680px, 94vw); }
+  .detail-list { grid-template-columns: 96px 1fr; }
 }
-.drawer.on { transform: translateX(0); }
-.dr-hd { padding: 18px 24px 14px; border-bottom: 1px solid #dbe4ef; background: #f8fafc; }
-.dr-hd .row1 { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-.dr-hd h3 { font-size: 16.5px; font-weight: 600; line-height: 1.45; color: #0f1e33; padding-right: 26px; }
-.dr-close {
-  position: absolute; top: 14px; right: 16px; width: 28px; height: 28px; border: none;
-  background: transparent; font-size: 20px; color: #5b6b80; cursor: pointer; border-radius: 5px; line-height: 1;
+@media (min-width: 1050px) {
+  .top-nav { display: flex; }
+  .analysis-grid { grid-template-columns: repeat(12, 1fr); gap: 12px; }
+  .analysis-panel { grid-column: span 6; }
+  .analysis-panel.wide { grid-column: span 8; }
+  .analysis-panel.full { grid-column: 1 / -1; }
+  .city-row { display: grid; grid-template-columns: 68px minmax(120px, 1.4fr) 68px 92px 100px; gap: 14px; }
+  .city-track { flex: none; }
+  .city-date { display: block; }
 }
-.dr-close:hover { background: #e8f0fe; color: #0f1e33; }
-.dr-body { flex: 1; overflow-y: auto; padding: 20px 24px 40px; }
-.kv { display: grid; grid-template-columns: 82px 1fr; gap: 9px 14px; margin-bottom: 20px; font-size: 13px; }
-.kv .k { color: #5b6b80; font-size: 12.5px; }
-.kv .v { color: #1f2d3d; word-break: break-all; }
-.kv .v b { color: #d97706; font-size: 15px; }
-.sec-t { font-size: 12px; color: #5b6b80; letter-spacing: 1px; margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px dashed #dbe4ef; }
-.doc-txt {
-  white-space: pre-wrap; font-size: 13.5px; line-height: 1.95; color: #1f2d3d;
-  background: #f8fafc; border: 1px solid #e2e9f2; border-radius: 8px; padding: 16px 18px;
-}
-.dr-ft { padding: 12px 24px; border-top: 1px solid #dbe4ef; background: #f8fafc; display: flex; gap: 10px; align-items: center; }
-.dr-ft a {
-  display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #3b82f6;
-  color: #fff; border-radius: 6px; text-decoration: none; font-size: 13px; transition: background .15s;
-}
-.dr-ft a:hover { background: #2563eb; }
-@media screen and (max-width: 1080px) { .grid-2 { grid-template-columns: 1fr; gap: 0; } }
-@media screen and (max-width: 600px) {
-  body { padding: 12px !important; }
-  h1 { font-size: 20px !important; } h2 { font-size: 17px !important; }
-  .stat-grid { flex-direction: column; }
-  .hbar-label { width: 90px; font-size: 12px; }
-  .topnav { position: static; }
-  .search-input { width: 130px; }
-}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 @media print {
-  body { padding: 0 !important; margin: 0 !important; background: #f4f7fb; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-  body::before, .topnav, .pager, .search-input { display: none !important; }
-  .title { border-radius: 0; box-shadow: none; }
-  .stat, .trend-card, .table-wrap { box-shadow: none; border: 1px solid #dbe4ef; }
-  .grid-2 { display: block !important; }
-  table.table { min-width: 0; }
+  .app-header, .page-actions, .filter-bar, .filter-status, .panel-settings, .pagination, .drawer-mask, .detail-drawer, .toast { display: none !important; }
+  body { background: #ffffff; color: #000000; }
+  .workspace { max-width: none; padding: 0; }
+  .analysis-panel, .kpi-card, .table-container { break-inside: avoid; }
 }
 </style>
 </head>
-<body class="mode-dashboard" data-palette="ink-blue">
-
-<section class="title">
-  <h1>秀山县发改局项目批复看板</h1>
-  <div class="accent-line"></div>
-  <p id="titleSub">统计周期</p>
-  <span class="badge">项目审批动态监控 · 点击明细行查看原文</span>
-</section>
-
-<nav class="topnav">
-  <a href="#sec1">核心指标</a>
-  <a href="#sec2">月度趋势</a>
-  <a href="#sec3">类型分布</a>
-  <a href="#sec4">项目明细</a>
-  <a href="#sec5">业务洞察</a>
-  <span class="nav-total" id="navTotal"></span>
-</nav>
-
-<h1 class="heading" id="sec1">一、核心指标</h1>
-<div class="stat-grid" data-cols="4" id="statGrid"></div>
-<p class="paragraph" style="font-size:14px;color:#5b6b80;margin:0 0 8px 0;" id="sec1Note"></p>
-
-<div class="grid-2" data-cols="2">
-  <div id="sec2">
-    <h1 class="heading">二、月度发布趋势</h1>
-    <div class="trend-card">
-      <h3>近半年各月批复发布数量</h3>
-      <div class="chart-row" id="chartRow"></div>
-      <div class="chart-labels" id="chartLabels"></div>
-      <p class="note">点击柱子或月份标签，可跳到下方明细表并只显示该月批复。</p>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="app-header">
+  <div class="header-inner">
+    <a class="brand" href="./" aria-label="发改批复监测工作台首页">
+      <span class="brand-name">发改批复监测</span>
+      <span class="brand-scope">酉阳 / 秀山</span>
+    </a>
+    <nav class="top-nav" aria-label="页面导航">
+      <a href="#analysis">分析总览</a>
+      <a href="#projects">项目明细</a>
+      <a href="#sources">数据来源</a>
+    </nav>
+    <div class="header-actions">
+      <span class="update-time" id="headerUpdated"></span>
+      <button class="button button-quiet" id="themeButton" type="button">深色模式</button>
     </div>
   </div>
-  <div id="sec3">
-    <h1 class="heading">三、批复类型分布</h1>
-    <div class="trend-card">
-      <h3>各类型占比与投资</h3>
-      <div class="hbar-row" id="hbarRow"></div>
-      <p class="note">点击任意类型条目，可跳到下方明细表并只显示该类批复。</p>
+</header>
+
+<main class="workspace" id="main">
+  <section class="page-heading" aria-labelledby="pageTitle">
+    <div>
+      <h1 id="pageTitle">批复监测总览</h1>
+      <p id="pageSummary">官方公开信息的统一检索、比较与追溯</p>
     </div>
-  </div>
-</div>
-
-<h1 class="heading" id="sec4">四、批复项目明细</h1>
-<div class="table-wrap">
-  <div class="table-caption">
-    <span>秀山县发改近半年批复项目清单
-      <span class="filter-tag" id="filterTag"><span id="filterText"></span><button class="filter-x" id="filterX" type="button" aria-label="清除筛选">✕</button></span>
-    </span>
-    <span class="cap-right">
-      <input type="search" class="search-input" id="q" placeholder="搜索项目 / 单位 / 文号 / 正文…">
-    </span>
-  </div>
-  <div class="table-scroll">
-  <table class="table" id="pfTable">
-    <colgroup>
-      <col style="width:11%"><col style="width:10%"><col style="width:37%"><col style="width:11%"><col style="width:16%"><col style="width:15%">
-    </colgroup>
-    <thead>
-      <tr>
-        <th data-sort="d">发布日期<span class="ar">▼</span></th>
-        <th data-sort="c">类型<span class="ar">▼</span></th>
-        <th data-sort="n">项目名称 / 建设单位<span class="ar">▼</span></th>
-        <th data-sort="m">投资额<span class="ar">▼</span></th>
-        <th data-sort="no">文号<span class="ar">▼</span></th>
-        <th data-sort="dd">成文日期<span class="ar">▼</span></th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-  </div>
-  <div class="row-hint">点击行查看批复正文详情</div>
-  <div class="pager">
-    <button class="pager-btn" id="pfPrev" aria-label="上一页">上一页</button>
-    <div class="pager-nums" id="pfNums"></div>
-    <button class="pager-btn" id="pfNext" aria-label="下一页">下一页</button>
-    <span class="pager-info" id="pfInfo"></span>
-  </div>
-</div>
-
-<div class="grid-2" data-cols="2">
-  <div id="sec5">
-    <h1 class="heading">五、业务洞察</h1>
-    <aside class="callout" data-variant="tip">
-      <p id="insightText"></p>
-    </aside>
-  </div>
-  <div>
-    <h2 class="heading">主要数据来源</h2>
-    <div class="source-list">
-      <ol class="list">
-        <li id="source-1"><span class="src-id">[1]</span> <a class="source-link" href="https://www.cqxs.gov.cn/bm/fzggw/zwgk_77940/zfxxgkml_178039/jczwxxgk0915/gcjsxmzbtb/sphzxx1/" target="_blank">秀山县人民政府网 · 县发展改革委政务公开（公共资源交易领域基层政务公开 · 工程建设项目招标投标 · 审批核准信息）</a>，批复文件全文（抓取时间 <span id="genTime"></span>）</li>
-      </ol>
+    <div class="page-actions">
+      <details class="panel-settings" id="panelSettings">
+        <summary class="button">模块</summary>
+        <div class="panel-menu" id="panelMenu"></div>
+      </details>
+      <button class="button" id="copyViewButton" type="button">复制视图链接</button>
+      <button class="button button-primary" id="exportButton" type="button">导出当前结果</button>
     </div>
-  </div>
-</div>
+  </section>
 
-<div class="mask" id="mask"></div>
-<div class="drawer" id="drawer">
-  <button class="dr-close" id="drClose" aria-label="关闭">×</button>
-  <div class="dr-hd">
-    <div class="row1" id="drTags"></div>
-    <h3 id="drTitle"></h3>
+  <section class="filter-bar" aria-label="全局筛选">
+    <div class="filter-field filter-city">
+      <span class="field-label">城市</span>
+      <div class="segmented" id="cityFilters"></div>
+    </div>
+    <label class="filter-field">
+      <span class="field-label">统计时段</span>
+      <select id="periodFilter">
+        <option value="all">全部监控周期</option>
+        <option value="90">近 90 天</option>
+        <option value="30">近 30 天</option>
+      </select>
+    </label>
+    <label class="filter-field">
+      <span class="field-label">批复类型</span>
+      <select id="categoryFilter"><option value="all">全部类型</option></select>
+    </label>
+    <label class="filter-field filter-search">
+      <span class="field-label">关键词</span>
+      <input id="searchFilter" type="search" placeholder="项目、建设单位或文号" autocomplete="off">
+    </label>
+    <button class="button button-quiet reset-button" id="resetButton" type="button">重置</button>
+  </section>
+  <div class="filter-status">
+    <div class="active-filters" id="activeFilters" aria-live="polite"></div>
+    <span id="filterResult"></span>
   </div>
-  <div class="dr-body" id="drBody">
-    <div class="kv" id="drKv"></div>
-    <div class="sec-t">批复正文</div>
-    <div class="doc-txt" id="drTxt"></div>
+
+  <section class="kpi-grid" aria-label="当前筛选核心指标">
+    <article class="kpi-card"><span class="kpi-label">新批项目</span><strong class="kpi-value" id="kpiCount">0</strong><span class="kpi-note" id="kpiCountNote"></span></article>
+    <article class="kpi-card"><span class="kpi-label">披露总投资</span><strong class="kpi-value" id="kpiInvestment">0</strong><span class="kpi-note" id="kpiInvestmentNote"></span></article>
+    <article class="kpi-card"><span class="kpi-label">覆盖城市</span><strong class="kpi-value" id="kpiCities">0</strong><span class="kpi-note" id="kpiCitiesNote"></span></article>
+    <article class="kpi-card"><span class="kpi-label">最近发布</span><strong class="kpi-value kpi-date" id="kpiLatest">无数据</strong><span class="kpi-note">按政府网站发布日期</span></article>
+  </section>
+
+  <section class="analysis-section" id="analysis" aria-labelledby="analysisTitle" hidden>
+    <div class="section-heading">
+      <div><h2 id="analysisTitle">交互分析</h2><p>图表与项目明细共用筛选条件，点击图形可继续缩小范围</p></div>
+    </div>
+    <div class="analysis-grid" id="analysisGrid"></div>
+  </section>
+
+  <section class="projects-section" id="projects" aria-labelledby="projectsTitle">
+    <div class="section-heading">
+      <div><h2 id="projectsTitle">项目明细</h2><p>选择项目查看批复摘要，官方原文在新窗口打开</p></div>
+      <span class="section-meta" id="tableMeta"></span>
+    </div>
+    <div class="table-container">
+      <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th><button class="sort-button" data-sort="date" type="button">发布日期</button></th>
+            <th><button class="sort-button" data-sort="cityName" type="button">城市</button></th>
+            <th><button class="sort-button" data-sort="category" type="button">类型</button></th>
+            <th class="project-column"><button class="sort-button" data-sort="name" type="button">项目与建设单位</button></th>
+            <th class="numeric"><button class="sort-button" data-sort="investment" type="button">投资额</button></th>
+            <th><button class="sort-button" data-sort="docNo" type="button">批复文号</button></th>
+          </tr></thead>
+          <tbody id="projectTableBody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="emptyState" hidden>
+        <p>当前条件下没有项目</p>
+        <button class="button" id="emptyResetButton" type="button">清除筛选条件</button>
+      </div>
+      <div class="table-footer">
+        <span id="tablePageSummary"></span>
+        <div class="pagination">
+          <button class="button button-quiet" id="previousPage" type="button">上一页</button>
+          <span id="pageIndicator"></span>
+          <button class="button button-quiet" id="nextPage" type="button">下一页</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sources-section" id="sources" aria-labelledby="sourcesTitle">
+    <div><h2 id="sourcesTitle">数据来源与口径</h2><p id="dataNote"></p></div>
+    <div class="source-links" id="sourceLinks"></div>
+  </section>
+</main>
+
+<footer class="app-footer"><span>数据以政府网站原文为准</span><span id="footerPeriod"></span></footer>
+
+<div class="drawer-mask" id="drawerMask" hidden></div>
+<aside class="detail-drawer" id="detailDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <div class="drawer-header">
+    <div><span class="drawer-eyebrow" id="drawerMeta"></span><h2 id="drawerTitle"></h2></div>
+    <button class="button button-quiet" id="drawerClose" type="button">关闭</button>
   </div>
-  <div class="dr-ft">
-    <a id="drLink" href="#" target="_blank" rel="noopener">查看原文 ↗</a>
+  <div class="drawer-body">
+    <dl class="detail-list" id="drawerDetails"></dl>
+    <section class="document-section"><h3>批复正文</h3><div class="document-content" id="drawerContent"></div></section>
   </div>
-</div>
+  <div class="drawer-footer"><a class="button button-primary" id="drawerSource" href="#" target="_blank" rel="noopener">查看官方原文</a></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
-const DB = {"items":[{"i":0,"c":"设计批复","n":"秀山县梅江镇两路村2026年度市级美丽移民村建设项目概算","no":"秀山发改投〔2026〕165号","d":"2026-05-29","dd":"2026-05-29","u":"秀山县梅江镇人民政府","loc":"秀山县梅江镇两路村","m":521.78,"dur":"","fund":"争取大中型水库移民后期扶持资金","code":"2508-500241-04-05-567970","t":"关于秀山县梅江镇两路村2026年度市级美丽移民村建设项目概算的批复","url":"https://www.cqxs.gov.cn/bm/fzggw/zwgk_77940/zfxxgkml_178039/jczwxxgk0915/gcjsxmzbtb/sphzxx1/202605/t20260529_15716203.html","txt":"—1—\n秀山土家族苗族自治县发展和改革委员会文件\n秀山发改投〔2026〕165 号\n秀山土家族苗族自治县发展和改革委员会\n关于秀山县梅江镇两路村 2026 年度市级美丽移\n民村建设项目概算的批复\n梅江镇人民政府：\n你镇《关于审批秀山县梅江镇两路村 2026 年度市级美丽移民\n村建设项目概算的请示》（梅江府文〔2026〕7 号）及相关资料收\n悉。根据四川和易信工程勘察设计有限公司编制的概算书和中北\n工程设计咨询有限公司出具的概算审核报告，结合秀山县水利局\n《关于秀山县梅江镇两路村 2026 年度市级美丽移民村建设项目初\n步设计准予行政许可的决定》（秀山水利许可〔2025〕108 号），\n经研究，现将工程投资概算批复如下：\n一、项目名称：秀山县梅江镇两路村 2026 年度市级美丽移民\n村建设项目。\n二、项目代码：2508-500241-04-05-567970。\n—2—\n三、项目法人：秀山县梅江镇人民政府。\n四、建设地址：秀山县梅江镇两路村。\n五、建设内容及规模：（一）、基础设施改善工程：生产道\n路硬化 2 条 587m，水泥公路油化（白改黑）9 条 2624m，改造排\n洪渠 2 条 530m，整治灌溉渠道 1 条 286m，古井改造 2 处；（二）、\n公共服务设施提升工程：村委广场篮球场铺装彩色混凝土 820 ㎡，\n改造标识牌 1 处，新建村规民约宣传牌 2 处；（三）人居环境综\n合整治工程：硬化入户路 14 条 1018m，修建居民院坝矮墙 1893m，\n花池 482m，安装太阳能路灯 200 套，垃圾收运箱 15 个。\n六、概算总投资：本项目估算总投资为 521.78 万元。其中工\n程费用 437.74 万元；工程建设其他费用 59.20 万元；基本预备费\n为 24.84 万元。资金来源为争取大中型水库移民后期扶持资金。\n七、其他事宜：请你单位根据有关规定和要求，严格执行项\n目法人责任制、招标投标制、合同管理制、工程监理制、竣工验\n收制和质量责任追究制等制度，切实加强工程建设资金的使用管\n理，确保工程质量、工期、投资控制到位。工程的建设要严格按\n照工程造价和投资，原则上不得超出我委核定的概算总投资。"}],"from":"2026-05-03","to":"2026-11-02","meta":{"city":"xiushan","city_name":"秀山县","region":"重庆市秀山土家族苗族自治县","agency":"秀山土家族苗族自治县发展和改革委员会","agency_short":"秀山县发改","board_title":"秀山县发改局项目批复看板","daily_title":"秀山县发改局项目批复日报","source_desc":"秀山县人民政府网 · 县发展改革委政务公开（公共资源交易领域基层政务公开 · 工程建设项目招标投标 · 审批核准信息）","source_url":"https://www.cqxs.gov.cn/bm/fzggw/zwgk_77940/zfxxgkml_178039/jczwxxgk0915/gcjsxmzbtb/sphzxx1/","source_file_desc":"批复文件全文","doc_kind":"批复","note":"重庆市秀山县（政府网站群 WCM 静态页）；2025 年后批复正文以 PDF 附件发布，由适配器自动提取 PDF 文本。"}};
-const ITEMS = DB.items;
-const TAG_CLS = {'核准前公示':'tag-ks','审批前公示':'tag-sj','可研批复':'tag-ks','设计批复':'tag-sj','立项批复':'tag-lx'};
-function tagCls(c){ return TAG_CLS[c] || 'tag-lx'; }
-const $ = id => document.getElementById(id);
-const esc = s => String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function money(v){ return v>0 ? (v>=10000 ? (v/10000).toFixed(2).replace(/\.?0+$/,'')+' 亿' : Math.round(v)+' 万') : '—'; }
+const DB = {"dateFrom":"2026-05-03","dateTo":"2026-11-02","fetchedAt":"2026-11-02T11:17:21","cities":[{"key":"youyang","name":"酉阳县","shortName":"酉阳","region":"重庆市酉阳土家族苗族自治县","sourceDesc":"酉阳县人民政府网 · 县发展改革委政务公开（重大建设项目批准结果 / 审批核准信息 / 行政许可办理结果）","sourceUrl":"https://www.youyang.gov.cn/bmjz_sites/bm/fzggw/zwgk_104134/zfxxgkml/zdjsxmlyjczwgk/pzjgxx/","accent":"#2f5f9e","count":5,"excluded":0,"investment":9531.32,"withInvestment":5,"latestDate":"2026-10-13","categories":{"核准批复":3,"立项批复":2},"items":[{"id":"youyang-0","city":"youyang","cityName":"酉阳","category":"核准批复","name":"酉阳县后坪乡高坪村捡柴沟—后兴村洞砍上输电线路工程项目","unit":"华电酉阳新能源有限公司","location":"酉阳县后坪乡","date":"2026-10-13","docDate":"2026-10-13","docNo":"酉阳发改能环〔2026〕47号","investment":1643.2,"duration":"","fund":"业主自筹和商请银行贷款","code":"2501-500242-04-01-716950","title":"酉阳土家族苗族自治县发展和改革委员会关于酉阳县后坪乡高坪村捡柴沟—后兴村洞砍上输电线路工程项目核准的批复","url":"https://www.youyang.gov.cn/bmjz_sites/bm/fzggw/zwgk_104134/zfxxgkml/zdjsxmlyjczwgk/pzjgxx/202610/t20261013_16223256.html","content":"酉阳土家族苗族自治县发展和改革委员会关于酉阳县后坪乡高坪村捡柴沟—后兴村洞砍上输电线路工程项目核准的批复 华电酉阳县新能源有限公司：你公司《关于酉阳县后坪乡高坪村捡柴沟—后兴村洞砍上输电线路工程项目核准的请示》（华电酉新函〔2026〕44号）收悉，结合博智顺为勘测规划设计有限公司的评估报告意见，经研究，现就核准事项批复如下。一、为保障风电项目电力送出，依据《行政许可法》《企业投资项目核准和备案管理条例》，原则同意实施该项目。二、项目代码：2501-500242-04-01-716950。三、项目单位：华电酉阳新能源有限公司。四、项目建设地址：酉阳县后坪乡。五、项目主要建设内容及规模：本项目新建1回35kV输电线路，按“单路架空+电缆直埋”方式设计，其中，架空线路总长度为12.5km、电缆线路总长度为5km，新建30座塔基。六、总投资及资金来源：项目估算总投资1643.2万元，资金来源为业主自筹和商请银行贷款。七、招标范围、招标方式及招标组织形式严格按照《中华人民共和国招标投标法实施条例》及相关法律规定组织实施。八、本项目核准要件为酉阳土家族苗族自治县规划和自然资源局出具的《建设项目用地预审与选址意见书》（用字第市政500242202500003号），酉阳土家族苗族自治县信访办公室出具的《关于酉阳县后坪乡高坪村捡柴沟—后兴村洞砍上输电线路工程社会稳定风险评估备案的函》（酉阳信办备字〔2025〕9号）。九、如需对本项目核准文件所规定的有关内容进行调整，请按照《重庆市企业投资项目核准和备案管理办法》有关规定，及时提出变更申请，我委将根据项目具体情况，作出是否同意变更的书面决定。十、请你公司根据本核准文件，在项目开工建设前，依据相关法律、行政法规申请办理规划许可、土地使用、资源利用、安全生产、环境影响评价等相关手续。十一、本核准文件自印发之日起有效期限2年。在有效期内未开工建设且需要延期开工建设的，请在有效期届满30个工作日前，向我委申请延期。开工建设只能延期一次，期限最长不得超过1年。国家对项目延期开工建设另有规定的，依照其规定。项目在核准文件有效期内未开工建设且未按规定获取延期批准的，本核准文件自动失效。"},{"id":"youyang-1","city":"youyang","cityName":"酉阳","category":"核准批复","name":"重庆市酉阳县李溪镇至南腰界镇输电线路工程项目","unit":"重庆广酉新能源有限公司","location":"酉阳县李溪镇、南腰界镇","date":"2026-09-03","docDate":"2026-08-25","docNo":"酉阳发改能环〔2026〕38号","investment":3009.12,"duration":"","fund":"","code":"2608-500242-04-05-909833","title":"酉阳土家族苗族自治县发展和改革委员会关于重庆市酉阳县李溪镇至南腰界镇输电线路工程项目的核准批复","url":"https://www.youyang.gov.cn/bmjz_sites/bm/fzggw/zwgk_104134/zfxxgkml/zdjsxmlyjczwgk/pzjgxx/202609/t20260903_16027914.html","content":"酉阳土家族苗族自治县发展和改革委员会关于重庆市酉阳县李溪镇至南腰界镇输电线路工程项目的核准批复 重庆广酉新能源有限公司：你公司《关于重庆市酉阳县李溪镇至南腰界镇输电线路工程项目的核准请示》（广酉新能源渝函〔2026〕9号）收悉，结合博智顺为勘测规划设计有限公司的评估报告意见，经研究，现就核准事项批复如下。一、为保障风电项目电力送出，依据《行政许可法》《企业投资项目核准和备案管理条例》，原则同意实施该项目。二、项目代码：2608-500242-04-05-909833。三、项目单位：重庆广酉新能源有限公司。四、项目建设地址：酉阳县李溪镇、南腰界镇。五、项目主要建设内容及规模：主要建设内容为54基输电线路塔基，总用地面积约0.62公顷，路径总长约15.4公里。六、总投资及资金来源：项目估算总投资3009.12万元，资金来源为业主自筹902.74万元、商请银行贷款2106.38万元。七、核准招标：本项目的招标范围为施工。招标方式为公开招标，招标组织形式为自主招标。八、本项目核准要件为酉阳土家族苗族自治县规划和自然资源局出具的《关于重庆市酉阳县李溪镇至南腰界镇输电线路工程项目用地预审及选址意见的回复》（酉阳规资函〔2026〕432号），酉阳土家族苗族自治县信访办公室出具的《关于重庆市酉阳县李溪镇至南腰界镇输电线路工程社会稳定风险评估备案的函》（酉阳信办备字〔2026〕18号）。九、如需对本项目核准文件所规定的有关内容进行调整，请按照《重庆市企业投资项目核准和备案管理办法》有关规定，及时提出变更申请，我委将根据项目具体情况，作出是否同意变更的书面决定。十、请你公司根据本核准文件，在项目开工建设前，依据相关法律、行政法规申请办理规划许可、土地使用、资源利用、安全生产、环境影响评价等相关手续。十一、本核准文件自印发之日起有效期限2年。在有效期内未开工建设且需要延期开工建设的，请在有效期届满30个工作日前，向我委申请延期。开工建设只能延期一次，期限最长不得超过1年。国家对项目延期开工建设另有规定的，依照其规定。项目在核准文件有效期内未开工建设且未按规定获取延期批准的，本核准文件自动失效。"},{"id":"youyang-2","city":"youyang","cityName":"酉阳","category":"立项批复","name":"板桥乡水车坝村饼子坑休闲体验园配套项目","unit":"酉阳土家族苗族自治县板桥乡人民政府","location":"板桥乡水车坝村","date":"2026-07-20","docDate":"2026-07-20","docNo":"酉阳发改投审〔2026〕131号","investment":150.0,"duration":"6个月","fund":"2026年山东协作重庆市级财政援助资金","code":"2607-500242-04-01-451482","title":"酉阳土家族苗族自治县发展和改革委员会关于板桥乡水车坝村饼子坑休闲体验园配套项目立项的批复","url":"https://www.youyang.gov.cn/bmjz_sites/bm/fzggw/zwgk_104134/zfxxgkml/ggzyjylyjczwgk/gcjsxmzbzbtb/sphzxx1/202607/t20260720_15834451.html","content":"酉阳土家族苗族自治县板桥乡人民政府：你单位《关于板桥乡水车坝村饼子坑休闲体验园配套项目立项的请示》（板桥府文〔2026〕10号）收悉，经研究，现批复如下：一、原则同意板桥乡水车坝村饼子坑休闲体验园配套项目开展前期工作。二、项目法人：酉阳土家族苗族自治县板桥乡人民政府。三、项目代码：2607-500242-04-01-451482。四、建设地址：板桥乡水车坝村。五、建设规模及内容：该项目拟立足乡村自然生态资源与乡土特色，打造集体休闲观光、户外体验、农产品展销、电商助农于一体的乡村农文旅融合示范阵地。聚焦园区场地规整与安全保障，实施A区、B区洞口场地平整工程：洞口场平总挖方4278m³，新建堡坎411m³；完善园区供水系统，新建200m³供水池，DN50供水管4km；新建公共卫生间(包含厕位男女各6个，淋浴男女各4个，管理房及残疾人蹲位，化粪池)；农产品展销与电商助农直播中心（200㎡两层木房）等。六、项目总投资及资金来源：项目估算总投资150万元。其中：工程建设费用131.31万元，工程建设其他费用13.95万元，预备费4.74万元。资金来源为2026年山东协作重庆市级财政援助资金。七、建设工期：6个月。接此批复后，请抓紧编制可行性研究报告并及时送审，尽快衔接相关部门，落实建设资金，按照程序完善相关建设手续，方可开工建设。"},{"id":"youyang-3","city":"youyang","cityName":"酉阳","category":"立项批复","name":"酉阳职业教育中心教学硬件更新项目","unit":"重庆市酉阳职业教育中心","location":"重庆市酉阳职业教育中心校园内","date":"2026-07-20","docDate":"2026-07-20","docNo":"酉阳发改投审〔2026〕128号","investment":270.0,"duration":"4个月","fund":"东西部协作省级财政援助资金","code":"2606-500242-04-05-798712","title":"酉阳土家族苗族自治县发展和改革委员会关于酉阳职业教育中心教学硬件更新项目立项的批复","url":"https://www.youyang.gov.cn/bmjz_sites/bm/fzggw/zwgk_104134/zfxxgkml/ggzyjylyjczwgk/gcjsxmzbzbtb/sphzxx1/202607/t20260720_15834441.html","content":"重庆市酉阳职业教育中心：你单位《关于酉阳职业教育中心教学硬件更新项目立项请示》（酉职教文〔2026〕34号）收悉，结合县教委《关于酉阳职业教育中心教学硬件更新项目审查事宜的函》（酉阳教委函〔2026〕161号），经研究，现批复如下：一、原则同意酉阳职业教育中心教学硬件更新项目开展前期工作。二、项目法人：重庆市酉阳职业教育中心。三、项目代码：2606-500242-04-05-798712。四、建设地址：重庆市酉阳职业教育中心校园内。五、建设规模及内容：该项目拟4#楼配电室变压器升级扩容改造，配电室至教学区、学生宿舍区低压出线开关升级改造，配电室至9#楼主电缆更换，教学区重新设置空调配电箱及空调用电部分重新布线，宿舍区末端更换部分不满足需求的低压布电线。六、项目总投资及资金来源：项目估算总投资270万元。其中：工程建设费用233.08万元，工程建设其他费用29.06万元，预备费7.86万元。资金来源为东西部协作省级财政援助资金。七、建设工期：4个月。接此批复后，请抓紧编制可行性研究报告并及时送审，尽快衔接相关部门，落实建设资金，按照程序完善相关建设手续，方可开工建设。"},{"id":"youyang-4","city":"youyang","cityName":"酉阳","category":"核准批复","name":"重庆市酉阳县庙溪镇荆竹村至湘河村输电线路工程项目","unit":"重庆广酉新能源有限公司","location":"酉阳县庙溪镇","date":"2026-06-10","docDate":"2026-06-10","docNo":"酉阳发改能环〔2026〕32号","investment":4459.0,"duration":"","fund":"","code":"2605-500242-04-05-104238","title":"酉阳土家族苗族自治县发展和改革委员会关于重庆市酉阳县庙溪镇荆竹村至湘河村输电线路工程项目的核准批复","url":"https://www.youyang.gov.cn/bmjz_sites/bm/fzggw/zwgk_104134/zfxxgkml/zdjsxmlyjczwgk/pzjgxx/202606/t20260610_15744212.html","content":"重庆广酉新能源有限公司：你公司《关于申请重庆市酉阳县庙溪镇荆竹村至湘河村输电线路工程项目的核准请示》（广酉新能源函〔2026〕26号）收悉，结合博智顺为勘测规划设计有限公司的评估报告意见，经研究，现就核准事项批复如下。一、为保障风电项目电力送出，依据《行政许可法》《企业投资项目核准和备案管理条例》，原则同意实施该项目（项目代码：2605-500242-04-05-104238）。二、项目单位：重庆广酉新能源有限公司。三、项目建设地址：酉阳县庙溪镇。四、项目主要建设内容及规模：主要建设内容为46基输电线路塔基，总用地面积0.6624公顷，路径总长约9.8公里。五、项目总投资4459万元，资金来源为业主自筹1337.7万元、商请银行贷款3121.3万元。六、本项目的招标范围为施工。招标方式为公开招标，招标组织形式为自主招标。七、本项目核准要件为酉阳土家族苗族自治县规划和自然资源局出具的《关于重庆市酉阳县庙溪镇荆竹村至湘河村输电线路工程项目用地预审与选址意见的回复》（酉阳规资函〔2026〕218号），酉阳土家族苗族自治县信访办公室出具的《关于于重庆市酉阳县庙溪镇荆竹村至湘河村输电线路工程项目社会稳定风险评估备案的函》（酉阳信办备字〔2026〕7号）。八、如需对本项目核准文件所规定的有关内容进行调整，请按照《重庆市企业投资项目核准和备案管理办法》有关规定，及时提出变更申请，我委将根据项目具体情况，作出是否同意变更的书面决定。九、请你公司根据本核准文件，在项目开工建设前，依据相关法律、行政法规申请办理规划许可、土地使用、资源利用、安全生产、环境影响评价等相关手续。十、本核准文件自印发之日起有效期限2年。在有效期内未开工建设且需要延期开工建设的，请在有效期届满30个工作日前，向我委申请延期。开工建设只能延期一次，期限最长不得超过1年。国家对项目延期开工建设另有规定的，依照其规定。项目在核准文件有效期内未开工建设且未按规定获取延期批准的，本核准文件自动失效。"}]},{"key":"xiushan","name":"秀山县","shortName":"秀山","region":"重庆市秀山土家族苗族自治县","sourceDesc":"秀山县人民政府网 · 县发展改革委政务公开（公共资源交易领域基层政务公开 · 工程建设项目招标投标 · 审批核准信息）","sourceUrl":"https://www.cqxs.gov.cn/bm/fzggw/zwgk_77940/zfxxgkml_178039/jczwxxgk0915/gcjsxmzbtb/sphzxx1/","accent":"#b86432","count":1,"excluded":1,"investment":521.78,"withInvestment":1,"latestDate":"2026-05-29","categories":{"设计批复":1},"items":[{"id":"xiushan-0","city":"xiushan","cityName":"秀山","category":"设计批复","name":"秀山县梅江镇两路村2026年度市级美丽移民村建设项目概算","unit":"秀山县梅江镇人民政府","location":"秀山县梅江镇两路村","date":"2026-05-29","docDate":"2026-05-29","docNo":"秀山发改投〔2026〕165号","investment":521.78,"duration":"","fund":"争取大中型水库移民后期扶持资金","code":"2508-500241-04-05-567970","title":"关于秀山县梅江镇两路村2026年度市级美丽移民村建设项目概算的批复","url":"https://www.cqxs.gov.cn/bm/fzggw/zwgk_77940/zfxxgkml_178039/jczwxxgk0915/gcjsxmzbtb/sphzxx1/202605/t20260529_15716203.html","content":"—1—\n秀山土家族苗族自治县发展和改革委员会文件\n秀山发改投〔2026〕165 号\n秀山土家族苗族自治县发展和改革委员会\n关于秀山县梅江镇两路村 2026 年度市级美丽移\n民村建设项目概算的批复\n梅江镇人民政府：\n你镇《关于审批秀山县梅江镇两路村 2026 年度市级美丽移民\n村建设项目概算的请示》（梅江府文〔2026〕7 号）及相关资料收\n悉。根据四川和易信工程勘察设计有限公司编制的概算书和中北\n工程设计咨询有限公司出具的概算审核报告，结合秀山县水利局\n《关于秀山县梅江镇两路村 2026 年度市级美丽移民村建设项目初\n步设计准予行政许可的决定》（秀山水利许可〔2025〕108 号），\n经研究，现将工程投资概算批复如下：\n一、项目名称：秀山县梅江镇两路村 2026 年度市级美丽移民\n村建设项目。\n二、项目代码：2508-500241-04-05-567970。\n—2—\n三、项目法人：秀山县梅江镇人民政府。\n四、建设地址：秀山县梅江镇两路村。\n五、建设内容及规模：（一）、基础设施改善工程：生产道\n路硬化 2 条 587m，水泥公路油化（白改黑）9 条 2624m，改造排\n洪渠 2 条 530m，整治灌溉渠道 1 条 286m，古井改造 2 处；（二）、\n公共服务设施提升工程：村委广场篮球场铺装彩色混凝土 820 ㎡，\n改造标识牌 1 处，新建村规民约宣传牌 2 处；（三）人居环境综\n合整治工程：硬化入户路 14 条 1018m，修建居民院坝矮墙 1893m，\n花池 482m，安装太阳能路灯 200 套，垃圾收运箱 15 个。\n六、概算总投资：本项目估算总投资为 521.78 万元。其中工\n程费用 437.74 万元；工程建设其他费用 59.20 万元；基本预备费\n为 24.84 万元。资金来源为争取大中型水库移民后期扶持资金。\n七、其他事宜：请你单位根据有关规定和要求，严格执行项\n目法人责任制、招标投标制、合同管理制、工程监理制、竣工验\n收制和质量责任追究制等制度，切实加强工程建设资金的使用管\n理，确保工程质量、工期、投资控制到位。工程的建设要严格按\n照工程造价和投资，原则上不得超出我委核定的概算总投资。"}]}]};
+'use strict';
 
-/* ===== 聚合 ===== */
-const num = v => +v || 0;
-const byMonth = {}, byCat = {};
-ITEMS.forEach(it => {
-  const m = it.d.slice(0,7);
-  byMonth[m] = byMonth[m] || {n:0, amt:0}; byMonth[m].n++; byMonth[m].amt += it.m;
-  byCat[it.c] = byCat[it.c] || {n:0, amt:0}; byCat[it.c].n++; byCat[it.c].amt += it.m;
-});
-const months = Object.keys(byMonth).sort();
-const totalAmt = ITEMS.reduce((s,it)=>s+it.m,0);
-const invItems = ITEMS.filter(it=>it.m>0);
-
-/* ===== 指标卡 ===== */
-const CAT_ORDER = Object.keys(byCat).sort((a,b)=>byCat[b].n-byCat[a].n);
-$('statGrid').innerHTML = [
-  '<div class="num">'+ITEMS.length+'</div><div class="label">近半年新批'+(DB.meta&&DB.meta.doc_kind||'批复')+'</div>',
-  ...CAT_ORDER.slice(0,3).map(c=>'<div class="num dark">'+byCat[c].n+'</div><div class="label">'+c+'</div>'),
-  '<div class="num warn">'+(totalAmt/10000).toFixed(2)+'<small> 亿元</small></div><div class="label">批复总投资（'+invItems.length+'/'+ITEMS.length+' 条含投资额）</div>',
-].map(h=>'<div class="stat">'+h+'</div>').join('');
-$('navTotal').textContent = '近半年 '+ITEMS.length+' 条新批'+(DB.meta&&DB.meta.doc_kind||'批复')+' · 总投资约 '+(totalAmt/10000).toFixed(1)+' 亿元 · 数据截至 '+DB.to;
-$('titleSub').textContent = '统计周期：'+DB.from+' 至 '+DB.to+' · '+((DB.meta&&DB.meta.source_desc)||'');
-$('sec1Note').textContent = '已剔除变更 / 撤销 / 法人变更类批复（备查见 Excel「变更撤销类备查」表），本页仅统计新批项目，投资额取自批复正文"总投资/投资估算"。';
-const maxM = months.length ? Math.max(...months.map(m=>byMonth[m].n)) : 1;
-const maxCnt = Math.max(1, ...Object.values(byCat).map(c=>c.n), ...Object.values(byCat).map(c=>Math.round(c.amt/10000)));
-
-/* ===== 月度柱状图 ===== */
-const BAR_H = 75; // 最高柱像素
-$('chartRow').innerHTML = months.map(m =>
-  '<div class="bar-cell" data-month="'+m+'" role="button" tabindex="0" title="'+m+'：'+byMonth[m].n+' 条 · 投资 '+(byMonth[m].amt/10000).toFixed(2)+' 亿">'
-  + '<span class="bar-val">'+byMonth[m].n+'</span>'
-  + '<div class="bar" style="height:'+Math.max(4, Math.round(byMonth[m].n/maxM*BAR_H))+'px;"></div></div>').join('');
-$('chartLabels').innerHTML = months.map(m =>
-  '<span data-month="'+m+'">'+parseInt(m.slice(5),10)+'月</span>').join('');
-
-/* ===== 类型横条（数量+投资额双视图：条宽按投资额，标签显示数量） ===== */
-const catPalette = ['linear-gradient(90deg,#2563eb,#c9d6f3)','linear-gradient(90deg,#3b82f6,#e8f0fe)','linear-gradient(90deg,#14b8a6,#d1fae5)','linear-gradient(90deg,#8b5cf6,#ede9fe)','linear-gradient(90deg,#f59e0b,#fef3c7)'];
-const catColors = {};
-CAT_ORDER.forEach((c,i)=>catColors[c]=catPalette[i%catPalette.length]);
-$('hbarRow').innerHTML = Object.keys(byCat).map(c =>
-  '<div class="hbar-item" data-type="'+c+'" role="button" tabindex="0" title="点击筛选'+c+'">'
-  + '<div class="hbar-label">'+c+' <b>'+byCat[c].n+'</b></div>'
-  + '<div class="hbar-track"><div class="hbar-fill" style="width:'+Math.max(6, Math.round(byCat[c].n/maxCnt*100))+'%;background:'+(catColors[c]||'#3b82f6')+';"></div></div>'
-  + '<div class="money" style="width:72px;text-align:right;font-size:12px;color:#5b6b80;">'+(byCat[c].amt>0 ? (byCat[c].amt/10000).toFixed(2)+'亿' : '—')+'</div></div>').join('');
-
-/* ===== 状态与渲染 ===== */
-let state = { month:'', cat:'', q:'', sort:'d', desc:true, page:1 };
-const PER = 10;
-let filtered = [];
-
-ITEMS.forEach(it => { it._s = (it.n+' '+it.u+' '+it.no+' '+it.t+' '+it.txt).toLowerCase(); });
-
-function apply(){
-  const kw = state.q.trim().toLowerCase();
-  filtered = ITEMS.filter(it => {
-    if (state.month && it.d.slice(0,7) !== state.month) return false;
-    if (state.cat && it.c !== state.cat) return false;
-    if (kw && !kw.split(/\s+/).every(w => it._s.includes(w))) return false;
-    return true;
-  });
-  const k = state.sort, dir = state.desc ? -1 : 1;
-  filtered.sort((a,b) => {
-    if (k === 'm') return (a.m - b.m) * dir;
-    const av = a[k]||'', bv = b[k]||'';
-    return av < bv ? -dir : av > bv ? dir : 0;
-  });
-}
-
-function render(){
-  apply();
-  const total = filtered.length;
-  const pages = Math.max(1, Math.ceil(total / PER));
-  if (state.page > pages) state.page = pages;
-  const s = (state.page-1)*PER;
-  const view = filtered.slice(s, s+PER);
-
-  if (!total) {
-    $('tbody').innerHTML = '<tr><td colspan="6"><div class="empty">没有符合条件的批复，试试放宽筛选条件</div></td></tr>';
-  } else {
-    $('tbody').innerHTML = view.map(it => {
-      const cls = tagCls(it.c);
-      return '<tr data-id="'+it.i+'">'
-        + '<td class="date">'+it.d+'</td>'
-        + '<td><span class="tag '+cls+'">'+it.c+'</span></td>'
-        + '<td class="nm"><div class="t">'+esc(it.n)+'</div><div class="x">'+esc(it.u||'单位待公开')+'</div></td>'
-        + '<td class="money'+(it.m>=10000?' big':'')+'">'+money(it.m)+'</td>'
-        + '<td class="docno">'+esc(it.no||'—')+'</td>'
-        + '<td class="date">'+(it.dd||'—')+'</td>'
-        + '</tr>';
-    }).join('');
+/* 模块容器模板：负责面板骨架、显隐、错误隔离与第三方模块注册。
+ * 模块协议：
+ * {
+ *   id: 'trend',                 // 必填，唯一
+ *   title: '月度发布趋势',        // 必填
+ *   subtitle: '按发布日期聚合',    // 可选
+ *   description: '模块说明',       // 可选，用于模块菜单
+ *   size: 'wide',                // 可选：默认 / wide / full
+ *   defaultVisible: false,       // 可选，默认 false
+ *   render(slots, context) {}    // 必填；slots = { header, toolbar, body, footer }
+ *   destroy() {}                 // 可选，卸载或重渲染前清理
+ * }
+ */
+class ModuleHost {
+  constructor(options) {
+    this.section = options.section;
+    this.grid = options.grid;
+    this.menu = options.menu;
+    this.storageKey = options.storageKey || 'fagai-module-visibility';
+    this.onVisibilityChange = options.onVisibilityChange || (() => {});
+    this.modules = [];
+    this.visibility = this.readVisibility();
+    this.ready = false;
+    this.menu.addEventListener('click', event => this.handleMenuClick(event));
   }
 
-  const btns = [];
-  let st = Math.max(1, state.page-2), en = Math.min(pages, st+4); st = Math.max(1, en-4);
-  for (let p=st; p<=en; p++) btns.push('<button type="button" class="pager-btn'+(p===state.page?' active':'')+'" data-p="'+p+'">'+p+'</button>');
-  $('pfNums').innerHTML = btns.join('');
-  $('pfPrev').disabled = state.page === 1;
-  $('pfNext').disabled = state.page === pages;
-  $('pfInfo').textContent = '第 '+(s+1)+'–'+Math.min(s+PER,total)+' 条 · 共 '+total+' 条 · 第 '+state.page+'/'+pages+' 页';
+  readVisibility() {
+    try { return JSON.parse(localStorage.getItem(this.storageKey)) || {}; }
+    catch (error) { return {}; }
+  }
 
-  document.querySelectorAll('.bar-cell, .chart-labels span[data-month]').forEach(el =>
-    el.classList.toggle('active', !!state.month && el.getAttribute('data-month') === state.month));
-  document.querySelectorAll('.hbar-item').forEach(el =>
-    el.classList.toggle('active', !!state.cat && el.getAttribute('data-type') === state.cat));
-  document.querySelectorAll('thead th[data-sort]').forEach(th => {
-    th.classList.toggle('sorted', th.dataset.sort === state.sort);
-    const ar = th.querySelector('.ar');
-    if (ar) ar.textContent = th.dataset.sort === state.sort ? (state.desc ? '▼' : '▲') : '▼';
+  writeVisibility() {
+    try { localStorage.setItem(this.storageKey, JSON.stringify(this.visibility)); }
+    catch (error) {}
+  }
+
+  register(module) {
+    if (!module || !module.id || !module.title || typeof module.render !== 'function') {
+      throw new TypeError('模块必须提供 id、title 和 render(slots, context)');
+    }
+    const existingIndex = this.modules.findIndex(entry => entry.id === module.id);
+    if (existingIndex >= 0) {
+      const previous = this.modules[existingIndex];
+      if (typeof previous.destroy === 'function') previous.destroy();
+      this.modules.splice(existingIndex, 1, module);
+    } else {
+      this.modules.push(module);
+    }
+    if (typeof this.visibility[module.id] !== 'boolean') {
+      this.visibility[module.id] = module.defaultVisible === true;
+    }
+    this.renderMenu();
+    if (this.ready) this.render(this.lastContext || {});
+    return module;
+  }
+
+  list() {
+    return this.modules.map(module => ({
+      id: module.id,
+      title: module.title,
+      description: module.description || '',
+      size: module.size || '',
+      visible: this.visibility[module.id] === true,
+    }));
+  }
+
+  setVisible(id, visible) {
+    if (!this.modules.some(module => module.id === id)) return;
+    this.visibility[id] = visible;
+    this.writeVisibility();
+    this.renderMenu();
+    this.render(this.lastContext || {});
+    this.onVisibilityChange();
+  }
+
+  handleMenuClick(event) {
+    const button = event.target.closest('[data-module]');
+    if (button) this.setVisible(button.dataset.module, button.getAttribute('aria-checked') !== 'true');
+  }
+
+  renderMenu() {
+    if (!this.menu) return;
+    this.menu.innerHTML = this.modules.map(module => {
+      const checked = this.visibility[module.id] ? 'true' : 'false';
+      return '<button type="button" role="switch" aria-checked="' + checked + '" class="panel-option" data-module="' + module.id + '">'
+        + '<span class="switch-mark" aria-hidden="true"></span><span>' + module.title
+        + '<small>' + (module.description || '第三方分析模块') + '</small></span></button>';
+    }).join('') || '<div class="chart-empty">暂无可注册模块</div>';
+  }
+
+  render(context) {
+    this.lastContext = context;
+    const visible = this.modules.filter(module => this.visibility[module.id]);
+    if (this.section) this.section.hidden = visible.length === 0;
+    this.grid.innerHTML = '';
+    visible.forEach(module => {
+      const panel = document.createElement('article');
+      panel.className = 'analysis-panel ' + (module.size || '');
+      panel.dataset.moduleId = module.id;
+      panel.innerHTML =
+        '<header class="panel-header"><div><h3></h3><p></p></div><div class="module-toolbar" data-slot="toolbar"></div></header>' +
+        '<div class="panel-body" data-slot="body"></div>' +
+        '<footer class="module-footer" data-slot="footer"></footer>';
+      const slots = {
+        header: panel.querySelector('.panel-header div'),
+        toolbar: panel.querySelector('[data-slot="toolbar"]'),
+        body: panel.querySelector('[data-slot="body"]'),
+        footer: panel.querySelector('[data-slot="footer"]'),
+      };
+      slots.header.querySelector('h3').textContent = module.title;
+      slots.header.querySelector('p').textContent = module.subtitle || '';
+      slots.header.querySelector('p').hidden = !module.subtitle;
+      this.grid.appendChild(panel);
+      try {
+        module.render(slots, context);
+      } catch (error) {
+        slots.toolbar.innerHTML = '';
+        slots.footer.innerHTML = '';
+        slots.body.innerHTML = '<div class="chart-empty">模块暂时无法显示</div>';
+        console.error('分析模块渲染失败：' + module.id, error);
+      }
+    });
+  }
+
+  mount() {
+    this.ready = true;
+    this.renderMenu();
+  }
+}
+
+window.FagaiModuleHost = ModuleHost;
+
+'use strict';
+
+const ALL = DB.cities.flatMap(city => city.items);
+const CITY_MAP = new Map(DB.cities.map(city => [city.key, city]));
+const PAGE_SIZE = 10;
+const DEFAULT_STATE = {
+  city: 'all', period: 'all', category: 'all', month: '', q: '',
+  metric: 'count', sort: 'date', direction: 'desc', page: 1,
+};
+const $ = id => document.getElementById(id);
+const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+}[char]));
+const money = (value, empty = '未披露') => {
+  if (!value) return empty;
+  if (value >= 10000) return (value / 10000).toFixed(2).replace(/\.?0+$/, '') + ' 亿';
+  return value.toLocaleString('zh-CN', { maximumFractionDigits: 2 }) + ' 万';
+};
+const metricValue = (items, metric) => metric === 'investment'
+  ? items.reduce((sum, item) => sum + item.investment, 0)
+  : items.length;
+const formatMetric = (value, metric) => metric === 'investment' ? money(value, '0 万') : value + ' 个';
+const cityColor = key => (CITY_MAP.get(key) || {}).accent || '#2f5f9e';
+let toastTimer;
+let lastFocusedElement;
+
+function readStorage(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch (error) { return fallback; }
+}
+function writeStorage(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch (error) {}
+}
+function initialState() {
+  const params = new URLSearchParams(location.search);
+  const categories = new Set(ALL.map(item => item.category));
+  const next = { ...DEFAULT_STATE };
+  const city = params.get('city');
+  const period = params.get('period');
+  const category = params.get('category');
+  const month = params.get('month') || '';
+  const metric = params.get('metric');
+  const sort = params.get('sort');
+  const direction = params.get('direction');
+  if (city === 'all' || CITY_MAP.has(city)) next.city = city;
+  if (['all', '90', '30'].includes(period)) next.period = period;
+  if (category === 'all' || categories.has(category)) next.category = category;
+  if (/^\d{4}-\d{2}$/.test(month)) next.month = month;
+  next.q = (params.get('q') || '').slice(0, 120);
+  if (['count', 'investment'].includes(metric)) next.metric = metric;
+  if (['date', 'cityName', 'category', 'name', 'investment', 'docNo'].includes(sort)) next.sort = sort;
+  if (['asc', 'desc'].includes(direction)) next.direction = direction;
+  return next;
+}
+let state = initialState();
+
+function syncUrl() {
+  const params = new URLSearchParams();
+  ['city', 'period', 'category', 'month', 'q', 'metric', 'sort', 'direction'].forEach(key => {
+    const value = state[key];
+    if (value && value !== DEFAULT_STATE[key]) params.set(key, value);
+  });
+  const query = params.toString();
+  try { history.replaceState(null, '', location.pathname + (query ? '?' + query : '') + location.hash); } catch (error) {}
+}
+function periodStart() {
+  if (state.period === 'all') return '';
+  const date = new Date(DB.dateTo + 'T00:00:00Z');
+  date.setUTCDate(date.getUTCDate() - Number(state.period) + 1);
+  return date.toISOString().slice(0, 10);
+}
+function getFilteredItems(ignore = {}) {
+  const start = periodStart();
+  const query = state.q.trim().toLowerCase();
+  return ALL.filter(item => {
+    if (!ignore.city && state.city !== 'all' && item.city !== state.city) return false;
+    if (!ignore.period && start && item.date < start) return false;
+    if (!ignore.category && state.category !== 'all' && item.category !== state.category) return false;
+    if (!ignore.month && state.month && !item.date.startsWith(state.month)) return false;
+    if (!ignore.q && query) {
+      const text = (item.name + ' ' + item.unit + ' ' + item.docNo + ' ' + item.title).toLowerCase();
+      if (!query.split(/\s+/).every(word => text.includes(word))) return false;
+    }
+    return true;
   });
 }
-
-/* ===== 筛选交互 ===== */
-let lastCall = null;
-function setFilter(k, v){
-  const now = Date.now();
-  if (lastCall && lastCall.k===k && lastCall.v===v && now-lastCall.t < 600) { lastCall.t = now; return; }
-  lastCall = { k, v, t: now };
-  const cur = k==='m' ? state.month : state.cat;
-  if (k==='m') state.month = (cur===v) ? '' : v;
-  else state.cat = (cur===v) ? '' : v;
-  syncFilterTag();
-  state.page = 1;
-  render();
-  $('sec4').scrollIntoView({behavior:'smooth'});
+function getSortedItems(items) {
+  const direction = state.direction === 'asc' ? 1 : -1;
+  return items.slice().sort((a, b) => {
+    if (state.sort === 'investment') return (a.investment - b.investment) * direction;
+    return String(a[state.sort] || '').localeCompare(String(b[state.sort] || ''), 'zh-CN') * direction;
+  });
 }
-function syncFilterTag(){
-  const t = state.month ? state.month.slice(0,4)+'年'+parseInt(state.month.slice(5),10)+'月' : state.cat;
-  $('filterText').textContent = t || '';
-  $('filterTag').classList.toggle('visible', !!(state.month || state.cat));
+function setState(patch) {
+  state = { ...state, ...patch };
+  if (!Object.prototype.hasOwnProperty.call(patch, 'page')) state.page = 1;
+  renderAll();
 }
-document.querySelectorAll('.bar-cell, .chart-labels span[data-month]').forEach(el =>
-  el.addEventListener('click', () => setFilter('m', el.getAttribute('data-month'))));
-document.querySelectorAll('.hbar-item').forEach(el =>
-  el.addEventListener('click', () => setFilter('t', el.getAttribute('data-type'))));
-$('filterX').addEventListener('click', () => { state.month=''; state.cat=''; syncFilterTag(); state.page=1; render(); });
+function resetFilters() {
+  setState({ city: 'all', period: 'all', category: 'all', month: '', q: '', page: 1 });
+  $('searchFilter').value = '';
+}
+function showToast(message) {
+  clearTimeout(toastTimer);
+  $('toast').textContent = message;
+  $('toast').hidden = false;
+  toastTimer = setTimeout(() => { $('toast').hidden = true; }, 2200);
+}
 
-let timer;
-$('q').addEventListener('input', e => {
-  clearTimeout(timer);
-  timer = setTimeout(() => { state.q = e.target.value; state.page = 1; render(); }, 180);
+function renderCityFilters() {
+  const cities = [{ key: 'all', shortName: '全部' }, ...DB.cities];
+  $('cityFilters').innerHTML = cities.map(city =>
+    '<button type="button" data-city="' + city.key + '" class="' + (state.city === city.key ? 'active' : '') + '" aria-pressed="' + (state.city === city.key) + '">' + esc(city.shortName) + '</button>'
+  ).join('');
+}
+function renderFilterStatus(items) {
+  $('periodFilter').value = state.period;
+  $('categoryFilter').value = state.category;
+  const chips = [];
+  if (state.month) chips.push('<span class="filter-chip">月份：' + state.month + '<button type="button" data-clear-month aria-label="清除月份筛选">×</button></span>');
+  if (state.q) chips.push('<span class="filter-chip">关键词：' + esc(state.q) + '</span>');
+  $('activeFilters').innerHTML = chips.join('') || '<span>筛选条件同时应用于指标、图表和明细</span>';
+  $('filterResult').textContent = '匹配 ' + items.length + ' 条，共 ' + ALL.length + ' 条';
+}
+function renderKpis(items) {
+  const investment = items.reduce((sum, item) => sum + item.investment, 0);
+  const disclosed = items.filter(item => item.investment > 0).length;
+  const cities = new Set(items.map(item => item.city));
+  const latest = items.map(item => item.date).sort().pop() || '';
+  $('kpiCount').textContent = items.length + ' 个';
+  $('kpiCountNote').textContent = state.month ? '当前月份与筛选范围' : '当前筛选范围';
+  $('kpiInvestment').textContent = money(investment, '0 万');
+  $('kpiInvestmentNote').textContent = disclosed + ' / ' + items.length + ' 条披露投资额';
+  $('kpiCities').textContent = cities.size + ' 个';
+  $('kpiCitiesNote').textContent = DB.cities.filter(city => cities.has(city.key)).map(city => city.shortName).join('、') || '无覆盖城市';
+  $('kpiLatest').textContent = latest || '无数据';
+}
+
+function moduleContext(items) {
+  return {
+    items, cities: DB.cities, state: { ...state },
+    getItems: getFilteredItems, setState, esc, money, metricValue, formatMetric, cityColor,
+  };
+}
+const moduleHost = new ModuleHost({
+  section: $('analysis'),
+  grid: $('analysisGrid'),
+  menu: $('panelMenu'),
+  storageKey: 'fagai-module-visibility',
+  onVisibilityChange: () => renderAll(),
 });
-document.querySelectorAll('thead th[data-sort]').forEach(th =>
-  th.addEventListener('click', () => {
-    const k = th.dataset.sort;
-    if (state.sort === k) state.desc = !state.desc;
-    else { state.sort = k; state.desc = true; }
-    render();
-  }));
-$('pfPrev').addEventListener('click', () => { state.page--; render(); });
-$('pfNext').addEventListener('click', () => { state.page++; render(); });
-$('pfNums').addEventListener('click', e => {
-  const b = e.target.closest('button[data-p]'); if (!b) return;
-  state.page = +b.dataset.p; render();
+window.FagaiPlugins = Object.freeze({
+  register: module => moduleHost.register(module),
+  list: () => moduleHost.list(),
 });
 
-/* ===== 详情抽屉 ===== */
-const drawer = $('drawer'), mask = $('mask');
-function openDetail(id){
-  const it = ITEMS.find(x => x.i === +id); if (!it) return;
-  const cls = tagCls(it.c);
-  $('drTags').innerHTML = '<span class="tag '+cls+'">'+it.c+'</span><span style="font-size:12.5px;color:#5b6b80">'+it.d+' 发布</span>';
-  $('drTitle').textContent = it.n || it.t;
-  $('drKv').innerHTML = [
-    ['批复文号', esc(it.no || '—')],
-    ['建设单位', esc(it.u || '—')],
-    ['建设地点', esc(it.loc || '—')],
-    ['总投资', it.m ? '<b>'+money(it.m)+'元</b>' : '—'],
-    ['建设工期', esc(it.dur || '—')],
-    ['资金来源', esc(it.fund || '—')],
-    ['项目代码', esc(it.code || '—')],
-    ['成文日期', esc(it.dd || '—')],
-    ['原文标题', esc(it.t || '—')],
-  ].map(([k,v]) => '<div class="k">'+k+'</div><div class="v">'+v+'</div>').join('');
-  $('drTxt').textContent = it.txt ? it.txt + (it.txt.length >= 4000 ? '\n\n……（正文已截断，完整内容请查看原文）' : '') : '（无正文）';
-  $('drLink').href = it.url || '#';
-  drawer.classList.add('on'); mask.classList.add('on');
-  $('drBody').scrollTop = 0;
+function monthsBetween(from, to) {
+  let [year, month] = from.slice(0, 7).split('-').map(Number);
+  const [endYear, endMonth] = to.slice(0, 7).split('-').map(Number);
+  const months = [];
+  while (year < endYear || (year === endYear && month <= endMonth)) {
+    months.push(year + '-' + String(month).padStart(2, '0'));
+    month += 1;
+    if (month === 13) { year += 1; month = 1; }
+  }
+  return months;
+}
+
+function renderTrend(slots, context) {
+  const items = context.getItems({ month: true });
+  const months = monthsBetween(DB.dateFrom, DB.dateTo);
+  const cities = context.state.city === 'all' ? context.cities : context.cities.filter(city => city.key === context.state.city);
+  const metric = context.state.metric;
+  const values = cities.map(city => months.map(month => context.metricValue(items.filter(item => item.city === city.key && item.date.startsWith(month)), metric)));
+  const max = Math.max(1, ...values.flat());
+  slots.toolbar.innerHTML = '<div class="metric-switch"><button type="button" data-metric="count" class="' + (metric === 'count' ? 'active' : '') + '">项目数</button><button type="button" data-metric="investment" class="' + (metric === 'investment' ? 'active' : '') + '">投资额</button></div>';
+  slots.body.innerHTML = '<div class="chart-legend"><div class="legend-items">' + cities.map(city => '<span><i class="legend-mark" style="background:' + city.accent + '"></i>' + esc(city.shortName) + '</span>').join('') + '</div></div>'
+    + '<div class="trend-chart">' + months.map((month, monthIndex) => {
+      const bars = cities.map((city, cityIndex) => {
+        const value = values[cityIndex][monthIndex];
+        const height = value ? Math.max(4, value / max * 150) : 0;
+        return '<button type="button" class="trend-bar" data-month="' + month + '" style="height:' + height + 'px;background:' + city.accent + '" data-tooltip="' + esc(city.shortName + ' · ' + month + ' · ' + formatMetric(value, metric)) + '" aria-label="' + esc(city.shortName + month + formatMetric(value, metric) + '，点击筛选该月') + '"></button>';
+      }).join('');
+      return '<div class="trend-month ' + (context.state.month === month ? 'selected' : '') + '"><div class="trend-bars">' + bars + '</div><div class="trend-label">' + Number(month.slice(5)) + '月</div></div>';
+    }).join('') + '</div>';
+  slots.footer.innerHTML = '<span>点击柱形筛选月份，再次点击取消筛选</span>';
+  slots.toolbar.querySelectorAll('[data-metric]').forEach(button => button.addEventListener('click', () => context.setState({ metric: button.dataset.metric })));
+  slots.body.querySelectorAll('[data-month]').forEach(button => button.addEventListener('click', () => context.setState({ month: context.state.month === button.dataset.month ? '' : button.dataset.month })));
+}
+
+function renderCategories(slots, context) {
+  const items = context.getItems({ category: true });
+  const metric = context.state.metric;
+  const groups = new Map();
+  items.forEach(item => {
+    if (!groups.has(item.category)) groups.set(item.category, []);
+    groups.get(item.category).push(item);
+  });
+  const entries = [...groups.entries()].map(([name, group]) => ({ name, value: context.metricValue(group, metric) })).sort((a, b) => b.value - a.value);
+  if (!entries.length) {
+    slots.body.innerHTML = '<div class="chart-empty">当前条件下没有类型数据</div>';
+    slots.footer.innerHTML = '';
+    return;
+  }
+  const max = Math.max(1, ...entries.map(entry => entry.value));
+  slots.body.innerHTML = '<div class="chart-legend"><span>' + (metric === 'count' ? '按项目数量' : '按披露投资额') + '</span><span>点击类型可筛选</span></div><div class="category-list">'
+    + entries.map(entry => '<button type="button" class="category-row ' + (context.state.category === entry.name ? 'selected' : '') + '" data-category="' + esc(entry.name) + '"><span class="category-name">' + esc(entry.name) + '</span><span class="category-track"><span class="category-fill" style="display:block;width:' + Math.max(1, entry.value / max * 100) + '%"></span></span><span class="category-value">' + formatMetric(entry.value, metric) + '</span></button>').join('') + '</div>';
+  slots.footer.innerHTML = '<span>类型与项目明细联动，再次点击取消筛选</span>';
+  slots.body.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => context.setState({ category: context.state.category === button.dataset.category ? 'all' : button.dataset.category })));
+}
+
+function renderCityComparison(slots, context) {
+  const items = context.getItems({ city: true });
+  const metric = context.state.metric;
+  const rows = context.cities.map(city => {
+    const cityItems = items.filter(item => item.city === city.key);
+    const latest = cityItems.map(item => item.date).sort().pop() || '无数据';
+    return { city, items: cityItems, value: context.metricValue(cityItems, metric), latest };
+  });
+  const max = Math.max(1, ...rows.map(row => row.value));
+  slots.body.innerHTML = '<div class="chart-legend"><span>' + (metric === 'count' ? '条形长度表示项目数量' : '条形长度表示披露投资额') + '</span><span>点击城市名称可筛选</span></div><div class="city-compare">'
+    + rows.map(row => '<div class="city-row"><button type="button" class="city-name city-select" data-city="' + row.city.key + '"><i class="legend-mark" style="background:' + row.city.accent + '"></i>' + esc(row.city.shortName) + '</button><span class="city-track"><span class="city-fill" style="display:block;width:' + (row.value ? Math.max(1, row.value / max * 100) : 0) + '%;background:' + row.city.accent + '"></span></span><span class="city-number">' + row.items.length + ' 个</span><span class="city-number">' + money(row.items.reduce((sum, item) => sum + item.investment, 0), '0 万') + '</span><span class="city-date">' + row.latest + '</span></div>').join('') + '</div>';
+  slots.footer.innerHTML = '<span>其他城市保持可见，作为当前筛选的参照</span>';
+  slots.body.querySelectorAll('.city-select').forEach(button => button.addEventListener('click', () => context.setState({ city: context.state.city === button.dataset.city ? 'all' : button.dataset.city })));
+}
+
+moduleHost.register({ id: 'trend', title: '月度发布趋势', subtitle: '按发布日期聚合，选择柱形可筛选月份', description: '两县月度数量与投资额对比', size: 'wide', defaultVisible: false, render: renderTrend });
+moduleHost.register({ id: 'categories', title: '批复类型分布', subtitle: '比较类型结构并联动项目明细', description: '批复类型数量和金额分布', defaultVisible: false, render: renderCategories });
+moduleHost.register({ id: 'city-comparison', title: '城市对比', subtitle: '保持其他城市作为参照，点击名称切换范围', description: '城市项目数、投资额与最近发布日期', size: 'full', defaultVisible: false, render: renderCityComparison });
+
+function renderTable(items) {
+  const sorted = getSortedItems(items);
+  const pages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
+  state.page = Math.min(Math.max(1, state.page), pages);
+  const start = (state.page - 1) * PAGE_SIZE;
+  const pageItems = sorted.slice(start, start + PAGE_SIZE);
+  $('projectTableBody').innerHTML = pageItems.map(item => '<tr tabindex="0" data-id="' + item.id + '" aria-label="查看' + esc(item.name) + '详情">'
+    + '<td class="cell-date">' + item.date + '</td><td><span class="cell-city"><i class="legend-mark" style="background:' + cityColor(item.city) + '"></i>' + esc(item.cityName) + '</span></td><td class="cell-category">' + esc(item.category) + '</td>'
+    + '<td><span class="project-name" title="' + esc(item.name) + '">' + esc(item.name || item.title) + '</span><span class="project-unit">' + esc(item.unit || '建设单位未披露') + '</span></td>'
+    + '<td class="cell-money numeric">' + money(item.investment) + '</td><td class="cell-doc">' + esc(item.docNo || '未披露') + '</td></tr>').join('');
+  $('emptyState').hidden = sorted.length > 0;
+  $('tableMeta').textContent = '当前结果 ' + sorted.length + ' 条';
+  $('tablePageSummary').textContent = sorted.length ? '显示第 ' + (start + 1) + ' 至 ' + Math.min(start + PAGE_SIZE, sorted.length) + ' 条' : '没有可显示的记录';
+  $('pageIndicator').textContent = state.page + ' / ' + pages;
+  $('previousPage').disabled = state.page <= 1;
+  $('nextPage').disabled = state.page >= pages;
+  document.querySelectorAll('.sort-button').forEach(button => {
+    const active = button.dataset.sort === state.sort;
+    button.classList.toggle('active', active);
+    button.classList.toggle('ascending', active && state.direction === 'asc');
+    button.setAttribute('aria-sort', active ? (state.direction === 'asc' ? 'ascending' : 'descending') : 'none');
+  });
+}
+function renderSources() {
+  const excluded = DB.cities.reduce((sum, city) => sum + city.excluded, 0);
+  $('dataNote').textContent = '统计范围为 ' + DB.dateFrom + ' 至 ' + DB.dateTo + ' 内公开的新批项目。变更、撤销、法人变更类文件另行分流，本期共 ' + excluded + ' 条，不计入新批数量。投资额仅汇总正文明确披露的数据，未披露时不作估算。';
+  $('sourceLinks').innerHTML = DB.cities.map(city => '<div class="source-card"><a href="' + esc(city.sourceUrl) + '" target="_blank" rel="noopener">' + esc(city.shortName) + '官方公开来源</a><span>查看政府原文</span></div>').join('');
+  $('footerPeriod').textContent = '监控周期 ' + DB.dateFrom + ' 至 ' + DB.dateTo;
+  $('headerUpdated').textContent = '数据抓取 ' + (DB.fetchedAt ? DB.fetchedAt.replace('T', ' ') : DB.dateTo);
+}
+function renderAll() {
+  const items = getFilteredItems();
+  renderCityFilters();
+  renderFilterStatus(items);
+  renderKpis(items);
+  moduleHost.render(moduleContext(items));
+  renderTable(items);
+  syncUrl();
+}
+
+function openDetail(id, trigger) {
+  const item = ALL.find(entry => entry.id === id);
+  if (!item) return;
+  lastFocusedElement = trigger || document.activeElement;
+  $('drawerMeta').textContent = item.cityName + ' · ' + item.category + ' · ' + item.date + ' 发布';
+  $('drawerTitle').textContent = item.name || item.title;
+  const details = [
+    ['批复文号', item.docNo], ['建设单位', item.unit], ['建设地点', item.location],
+    ['总投资', item.investment ? money(item.investment) + '元' : '未披露'],
+    ['建设工期', item.duration], ['资金来源', item.fund], ['项目代码', item.code],
+    ['成文日期', item.docDate], ['原文标题', item.title],
+  ];
+  $('drawerDetails').innerHTML = details.map(([label, value]) => '<dt>' + label + '</dt><dd>' + esc(value || '未披露') + '</dd>').join('');
+  $('drawerContent').textContent = item.content ? item.content + (item.content.length >= 4000 ? '\n\n正文已截断，完整内容请查看官方原文。' : '') : '未抓取到正文，请查看官方原文。';
+  $('drawerSource').href = item.url || '#';
+  $('drawerMask').hidden = false;
+  $('detailDrawer').hidden = false;
   document.body.style.overflow = 'hidden';
+  $('drawerClose').focus();
 }
-function closeDetail(){
-  drawer.classList.remove('on'); mask.classList.remove('on');
+function closeDetail() {
+  if ($('detailDrawer').hidden) return;
+  $('drawerMask').hidden = true;
+  $('detailDrawer').hidden = true;
   document.body.style.overflow = '';
+  if (lastFocusedElement) lastFocusedElement.focus();
 }
-$('tbody').addEventListener('click', e => {
-  const tr = e.target.closest('tr[data-id]'); if (tr) openDetail(tr.dataset.id);
+function exportCsv() {
+  const rows = getSortedItems(getFilteredItems());
+  const header = ['发布日期', '城市', '批复类型', '项目名称', '建设单位', '投资额（万元）', '批复文号', '成文日期', '官方原文'];
+  const quote = value => '"' + String(value ?? '').replaceAll('"', '""') + '"';
+  const lines = [header, ...rows.map(item => [item.date, item.cityName, item.category, item.name, item.unit, item.investment || '', item.docNo, item.docDate, item.url])];
+  const csv = '﻿' + lines.map(row => row.map(quote).join(',')).join('\r\n');
+  const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = '发改批复_' + DB.dateTo + '_' + rows.length + '条.csv';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  showToast('已导出 ' + rows.length + ' 条当前结果');
+}
+async function copyViewLink() {
+  syncUrl();
+  try {
+    await navigator.clipboard.writeText(location.href);
+    showToast('视图链接已复制');
+  } catch (error) {
+    const input = document.createElement('textarea');
+    input.value = location.href;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    input.remove();
+    showToast('视图链接已复制');
+  }
+}
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  $('themeButton').textContent = theme === 'dark' ? '浅色模式' : '深色模式';
+  writeStorage('fagai-theme', theme);
+}
+
+$('cityFilters').addEventListener('click', event => {
+  const button = event.target.closest('[data-city]');
+  if (button) setState({ city: button.dataset.city });
 });
-$('drClose').addEventListener('click', closeDetail);
-mask.addEventListener('click', closeDetail);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+$('periodFilter').addEventListener('change', event => setState({ period: event.target.value, month: '' }));
+$('categoryFilter').addEventListener('change', event => setState({ category: event.target.value }));
+let searchTimer;
+$('searchFilter').addEventListener('input', event => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => setState({ q: event.target.value }), 140);
+});
+$('activeFilters').addEventListener('click', event => { if (event.target.closest('[data-clear-month]')) setState({ month: '' }); });
+$('resetButton').addEventListener('click', resetFilters);
+$('emptyResetButton').addEventListener('click', resetFilters);
+$('exportButton').addEventListener('click', exportCsv);
+$('copyViewButton').addEventListener('click', copyViewLink);
+$('themeButton').addEventListener('click', () => applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+$('projectTableBody').addEventListener('click', event => {
+  const row = event.target.closest('tr[data-id]');
+  if (row) openDetail(row.dataset.id, row);
+});
+$('projectTableBody').addEventListener('keydown', event => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  const row = event.target.closest('tr[data-id]');
+  if (row) { event.preventDefault(); openDetail(row.dataset.id, row); }
+});
+document.querySelectorAll('.sort-button').forEach(button => button.addEventListener('click', () => {
+  const sort = button.dataset.sort;
+  setState({ sort, direction: state.sort === sort && state.direction === 'desc' ? 'asc' : 'desc' });
+}));
+$('previousPage').addEventListener('click', () => setState({ page: state.page - 1 }));
+$('nextPage').addEventListener('click', () => setState({ page: state.page + 1 }));
+$('drawerClose').addEventListener('click', closeDetail);
+$('drawerMask').addEventListener('click', closeDetail);
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') { closeDetail(); $('panelSettings').open = false; }
+  if (event.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+    event.preventDefault();
+    $('searchFilter').focus();
+  }
+});
+document.addEventListener('click', event => {
+  if (!event.target.closest('#panelSettings')) $('panelSettings').open = false;
+});
 
-/* ===== 洞察 ===== */
-let peak = months.length ? months.reduce((a,b)=>byMonth[a].n>=byMonth[b].n?a:b) : '';
-const topInv = ITEMS.slice().sort((a,b)=>b.m-a.m)[0];
-$('insightText').innerHTML = '近半年新批批复 '+ITEMS.length+' 条、批复总投资约 <b>'+(totalAmt/10000).toFixed(2)+' 亿元</b>；'
-  + (peak ? parseInt(peak.slice(5),10)+' 月为批复高峰（'+byMonth[peak].n+' 条）。' : '')
-  + (topInv && topInv.m>0 ? '单体投资最大项目为「'+esc(topInv.n)+'」（'+money(topInv.m)+'元）。按惯例批复后 1-3 个月内将陆续启动勘察、设计、监理及施工招标，建议重点关注「设计批复」下发项目的后续招标公告。' : '');
+async function loadExternalPlugins() {
+  if (location.protocol === 'file:') return;
+  try {
+    const base = new URL('plugins/', location.href);
+    const response = await fetch(new URL('manifest.json', base), { cache: 'no-store' });
+    if (!response.ok) return;
+    const manifest = await response.json();
+    for (const entry of manifest.plugins || []) {
+      const modulePath = typeof entry === 'string' ? entry : entry.module;
+      if (!modulePath) continue;
+      try { await import(new URL(modulePath, base).href); }
+      catch (error) { console.error('第三方分析模块加载失败：' + modulePath, error); }
+    }
+  } catch (error) {
+    console.warn('未读取到第三方分析模块清单', error);
+  }
+}
 
-$('genTime').textContent = DB.to;
-render();
+$('categoryFilter').innerHTML = '<option value="all">全部类型</option>' + [...new Set(ALL.map(item => item.category))].sort().map(category => '<option value="' + esc(category) + '">' + esc(category) + '</option>').join('');
+$('searchFilter').value = state.q;
+$('searchFilter').title = '按 / 可快速聚焦搜索';
+applyTheme(readStorage('fagai-theme', 'light'));
+renderSources();
+moduleHost.mount();
+renderAll();
+loadExternalPlugins();
+
 </script>
-
 </body>
 </html>
